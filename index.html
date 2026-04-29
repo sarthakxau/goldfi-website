@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/logo.svg">
+    <title>Gold.Fi — Real, allocated gold from your phone</title>
+
+    <!-- Theme set before first paint to avoid flash. Wrapped because
+         localStorage throws in iOS Safari private mode. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('gf-theme') || 'noir';
+          document.documentElement.setAttribute('data-theme', saved);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'noir');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 2rem; text-align: center;">
+        Gold.Fi requires JavaScript. Please enable it to view the site.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
