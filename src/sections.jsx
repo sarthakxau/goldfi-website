@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, ArrowRight } from 'lucide-react';
+import { UserCheck, Wallet, Send, Check, ArrowRight } from 'lucide-react';
 import { Sparkline, Reveal, PhoneMini, useInView, useLivePrice, genPriceData } from './primitives';
 
 // Mid-page sections: stats, how it works, security, app showcase, IRA, testimonials, FAQ
@@ -63,8 +63,7 @@ export function HowItWorks() {
   const steps = [
     { n: '01', t: 'Sign up in 60 seconds', d: 'Just your phone number to start. PAN/DigiLocker KYC takes another two minutes — only required before you sell.', icon: 'id' },
     { n: '02', t: 'Buy with UPI', d: 'From ₹100. Pay over UPI; we instantly convert your rupees into 24K gold backed gram-for-gram by Tether Gold (XAUT).', icon: 'buy' },
-    { n: '03', t: 'Backed by Tether Gold', d: 'Every gram you own is collateralised one-to-one by XAUT — a token where each unit represents one troy ounce of physical gold, on-chain auditable 24/7.', icon: 'vault' },
-    { n: '04', t: 'Sell, gift, or redeem', d: 'Sell back to your bank in 15 minutes. Send grams to anyone via a link. Redeem 24K coins or jewellery once you cross 1 tola.', icon: 'truck' },
+    { n: '03', t: 'Sell, gift, or redeem', d: 'Sell back to your bank in 15 minutes. Send grams to anyone via a link. Redeem 24K coins or jewellery once you cross 1 tola.', icon: 'send' },
   ];
   return (
     <section id="product" style={{ padding: '120px 0', position: 'relative' }}>
@@ -72,7 +71,7 @@ export function HowItWorks() {
         <div style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.2fr', gap: 80, alignItems: 'start', marginBottom: 56 }}>
           <div>
             <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20 }}>How it works</div></Reveal>
-            <Reveal delay={80}><h2 className="gf-h2">From phone to <em>vault,</em><br />in four steps.</h2></Reveal>
+            <Reveal delay={80}><h2 className="gf-h2">From phone to <em>vault,</em><br />in three steps.</h2></Reveal>
           </div>
           <Reveal delay={160}>
             <p className="gf-lede" style={{ paddingTop: 40 }}>
@@ -80,7 +79,7 @@ export function HowItWorks() {
             </p>
           </Reveal>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
           {steps.map((s, i) => (
             <Reveal key={s.n} delay={i * 100}>
               <div style={{
@@ -91,7 +90,7 @@ export function HowItWorks() {
               onMouseEnter={(e) => e.currentTarget.style.background = 'var(--surface-elevated)'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'var(--surface)'}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 }}>
-                  <div className="font-mono" style={{ fontSize: 11, color: 'var(--gold-bright)', letterSpacing: '0.18em' }}>{s.n} / 04</div>
+                  <div className="font-mono" style={{ fontSize: 11, color: 'var(--gold-bright)', letterSpacing: '0.18em' }}>{s.n} / 03</div>
                   <StepIcon kind={s.icon} />
                 </div>
                 <h3 className="gf-h3" style={{ marginBottom: 12 }}>{s.t}</h3>
@@ -106,13 +105,11 @@ export function HowItWorks() {
 }
 
 export function StepIcon({ kind }) {
-  const c = 'var(--gold-bright)';
-  const s = { width: 36, height: 36 };
-  const props = { fill: 'none', stroke: c, strokeWidth: 1.4, strokeLinecap: 'round', strokeLinejoin: 'round' };
-  if (kind === 'id') return <svg viewBox="0 0 24 24" {...s}><rect x="3" y="6" width="18" height="13" rx="2" {...props} /><circle cx="9" cy="12" r="2" {...props} /><path d="M14 11h5M14 14h4" {...props} /></svg>;
-  if (kind === 'buy') return <svg viewBox="0 0 24 24" {...s}><path d="M3 10h18M3 14h18M5 6h14l1 14H4z" {...props} /></svg>;
-  if (kind === 'vault') return <svg viewBox="0 0 24 24" {...s}><rect x="3" y="4" width="18" height="16" rx="2" {...props} /><circle cx="12" cy="12" r="4" {...props} /><path d="M12 8v1M12 15v1M8 12h1M15 12h1" {...props} /></svg>;
-  if (kind === 'truck') return <svg viewBox="0 0 24 24" {...s}><path d="M3 8h11v9H3zM14 11h4l3 3v3h-7" {...props} /><circle cx="7" cy="18" r="2" {...props} /><circle cx="17" cy="18" r="2" {...props} /></svg>;
+  const props = { size: 32, color: 'var(--gold-bright)', strokeWidth: 1.4, absoluteStrokeWidth: true };
+  if (kind === 'id') return <UserCheck {...props} />;
+  if (kind === 'buy') return <Wallet {...props} />;
+  if (kind === 'send') return <Send {...props} />;
+  return null;
 }
 
 export function SecuritySection() {

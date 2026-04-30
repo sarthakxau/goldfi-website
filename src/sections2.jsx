@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkline, Reveal } from './primitives';
 
-// Remaining sections: Auto-Save (was IRA), testimonials, FAQ, CTA
+// Remaining sections: Auto-Save (was IRA), FAQ
 
 export function AutoSave() {
   return (
@@ -99,50 +99,6 @@ export function AutoSaveCard() {
   );
 }
 
-export function Testimonials() {
-  const t = [
-    { q: '"Finally — gold without the jeweller spread, the making charges, and the locker fees. Bought my first gram in 90 seconds via GPay."', n: 'Arjun M.', r: 'Software engineer, Bengaluru', amt: '4.6 g' },
-    { q: '"I save ₹50 every day on autopay. Six months in, my balance has crossed ₹12,000 and I barely notice it leaving my account."', n: 'Priya S.', r: 'Teacher, Pune', amt: '₹12,400' },
-    { q: '"I run a kirana store. The round-up feature converts my UPI spare change into gold — feels like I\'m saving for free."', n: 'Rakesh V.', r: 'Shop owner, Indore', amt: '11.2 g' },
-  ];
-  return (
-    <section style={{ padding: '120px 0' }}>
-      <div className="gf-container">
-        <div style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.2fr', gap: 80, marginBottom: 56 }}>
-          <div>
-            <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20 }}>Customers</div></Reveal>
-            <Reveal delay={80}><h2 className="gf-h2">2,40,000 savers.<br />One thing in <em>common.</em></h2></Reveal>
-          </div>
-          <Reveal delay={160}><p className="gf-lede" style={{ paddingTop: 40 }}>
-            They wanted gold without the friction — without jewellers, making charges, locker fees, or the lingering question of whether their "digital gram" was actually backed by metal.
-          </p></Reveal>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {t.map((x, i) => (
-            <Reveal key={i} delay={i * 100}>
-              <div className="gf-card" style={{ padding: 28, height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <svg width="22" height="18" viewBox="0 0 22 18" fill="none" style={{ marginBottom: 18 }}>
-                  <path d="M0 18V11C0 5.5 3 1.5 8 0L9 3C5.5 4 4 6.5 4 9H8V18H0ZM13 18V11C13 5.5 16 1.5 21 0L22 3C18.5 4 17 6.5 17 9H21V18H13Z" fill="var(--gold-bright)" opacity="0.7" />
-                </svg>
-                <p style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, lineHeight: 1.35, letterSpacing: '-0.01em', flex: 1, marginBottom: 24 }}>
-                  {x.q}
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingTop: 18, borderTop: '1px solid var(--border)' }}>
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 600 }}>{x.n}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{x.r}</div>
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--gold-bright)', letterSpacing: '0.1em' }}>{x.amt}</div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function FAQ() {
   const items = [
     ['Is the gold actually mine?', 'Yes. Every gram you save into goldfi is backed one-to-one by Tether Gold (XAUT) — a token where each unit represents one troy ounce of real, allocated 24K bullion. The backing is on-chain auditable, never lent, never pooled. Once you cross 1 tola (~11.66 g) you can redeem 24K coins shipped insured to your door.'],
@@ -185,45 +141,3 @@ export function FAQ() {
   );
 }
 
-export function FinalCTA({ onLaunch }) {
-  return (
-    <section style={{ padding: '140px 0', position: 'relative', overflow: 'hidden', background: 'var(--bg-deep)' }}>
-      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(50% 60% at 50% 50%, rgba(245,184,50,0.18) 0%, transparent 70%)' }} />
-      <div className="gf-grid-bg" />
-      <div className="gf-container" style={{ position: 'relative', textAlign: 'center' }}>
-        <Reveal>
-          <div className="gf-eyebrow" style={{ marginBottom: 24, justifyContent: 'center' }}>Real gold · Real vaults · Real ownership</div>
-        </Reveal>
-        <Reveal delay={100}>
-          <h2 className="gf-h2" style={{ maxWidth: 900, margin: '0 auto 28px', fontSize: 'clamp(40px, 5.5vw, 80px)' }}>
-            Buy your first <em>gram</em><br />of gold in 90 seconds.
-          </h2>
-        </Reveal>
-        <Reveal delay={200}>
-          <p className="gf-lede" style={{ margin: '0 auto 40px', textAlign: 'center' }}>
-            Open an account with just your phone number. From ₹10. No paperwork, no jeweller, no making charges.
-          </p>
-        </Reveal>
-        <Reveal delay={300}>
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button className="gf-cta" onClick={onLaunch} style={{ padding: '16px 28px', fontSize: 16 }}>
-              Buy gold with UPI
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
-            </button>
-            <button className="gf-cta-ghost">Download the app</button>
-          </div>
-        </Reveal>
-        <Reveal delay={400}>
-          <div style={{ marginTop: 56, display: 'flex', gap: 36, justifyContent: 'center', flexWrap: 'wrap', fontSize: 12, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--text-tertiary)' }}>
-            <span>· 24K MMTC-PAMP</span>
-            <span>· BIS hallmarked</span>
-            <span>· Insured vault</span>
-            <span>· UPI Autopay</span>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-Object.assign(window, { AutoSave, Testimonials, FAQ, FinalCTA });
