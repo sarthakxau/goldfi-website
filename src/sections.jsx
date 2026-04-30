@@ -1,27 +1,8 @@
 import React from 'react';
 import { UserCheck, Wallet, Send, Check, ArrowRight } from 'lucide-react';
-import { Sparkline, Reveal, PhoneMini, useInView, useLivePrice, genPriceData } from './primitives';
+import { Sparkline, Reveal, PhoneMini, useLivePrice, genPriceData } from './primitives';
 
-// Mid-page sections: stats, how it works, security, app showcase, IRA, testimonials, FAQ
-export function CountTo({ target, inView, duration = 1400 }) {
-  const [val, setVal] = React.useState(0);
-  React.useEffect(() => {
-    if (!inView) return;
-    let raf, start;
-    const tick = (t) => {
-      if (!start) start = t;
-      const p = Math.min(1, (t - start) / duration);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setVal(target * eased);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, target]);
-  if (target >= 1000) return val.toLocaleString(undefined, { maximumFractionDigits: 0 });
-  if (target < 10) return val.toFixed(1);
-  return Math.round(val).toString();
-}
+// Mid-page sections: how it works, security, app showcase
 
 export function HowItWorks() {
   const steps = [
@@ -278,16 +259,16 @@ export function AppShowcase() {
 
 export function AppMockup({ kind, tag, highlight }) {
   const data = React.useMemo(() => genPriceData(40, 2380, 18), []);
-  const { val, delta } = useLivePrice(2384.50);
+  const { delta } = useLivePrice(2384.50);
   return (
     <div style={{ position: 'relative' }}>
       {highlight && (
         <div style={{ position: 'absolute', inset: -20, background: 'radial-gradient(50% 60% at 50% 60%, rgba(245,184,50,0.25) 0%, transparent 70%)', filter: 'blur(20px)', borderRadius: 60, pointerEvents: 'none' }} />
       )}
       <PhoneMini scale={0.9}>
-        {kind === 'home' && <AppHome val={val} delta={delta} data={data} />}
-        {kind === 'buy' && <AppBuy val={val} />}
-        {kind === 'chart' && <AppChart val={val} delta={delta} data={data} />}
+        {kind === 'home' && <AppHome data={data} />}
+        {kind === 'buy' && <AppBuy />}
+        {kind === 'chart' && <AppChart delta={delta} data={data} />}
       </PhoneMini>
       <div style={{ textAlign: 'center', marginTop: 16 }}>
         <span className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>{tag}</span>
@@ -296,7 +277,7 @@ export function AppMockup({ kind, tag, highlight }) {
   );
 }
 
-export function AppHome({ val, delta, data }) {
+export function AppHome({ data }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
@@ -330,7 +311,7 @@ export function AppHome({ val, delta, data }) {
   );
 }
 
-export function AppBuy({ val }) {
+export function AppBuy() {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>← Buy gold</div>
@@ -360,7 +341,7 @@ export function AppBuy({ val }) {
   );
 }
 
-export function AppChart({ val, delta, data }) {
+export function AppChart({ delta, data }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 14 }}>← Live · 24K Gold / INR</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkline, Reveal } from './primitives';
 
-// Remaining sections: Auto-Save (was IRA), FAQ
+// Remaining sections: Auto-Save, FAQ
 
 export function AutoSave() {
   return (

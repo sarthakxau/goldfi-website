@@ -47,8 +47,6 @@ export function Waitlist() {
             <Reveal delay={240}>
               <div style={{ display: 'flex', gap: 36, flexWrap: 'wrap', marginBottom: 8 }}>
                 {[
-                  // { v: '4,218', l: 'On the waitlist' },
-                  // { v: '142', l: 'Invited this week' },
                   { v: 'Q2 2026', l: 'Public launch' },
                 ].map((s) => (
                   <div key={s.l} style={{ borderLeft: '1px solid var(--border)', paddingLeft: 16 }}>
