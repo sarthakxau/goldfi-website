@@ -3,42 +3,6 @@ import { UserCheck, Wallet, Send, Check, ArrowRight } from 'lucide-react';
 import { Sparkline, Reveal, PhoneMini, useInView, useLivePrice, genPriceData } from './primitives';
 
 // Mid-page sections: stats, how it works, security, app showcase, IRA, testimonials, FAQ
-
-export function StatsBand() {
-  const stats = [
-    { v: 2400, pre: '', suf: 'kg', l: 'Gold under custody', sub: 'Allocated, in customer names' },
-    { v: 1850, pre: '₹', suf: ' Cr', l: 'Settled YTD',         sub: 'Across 9.2M transactions' },
-    { v: 10,    pre: '₹', suf: '',   l: 'Minimum to start',     sub: 'Buy gold from ten rupees' },
-    { v: 4.7,    suf: ' ★',           l: 'Play Store rating',    sub: '2,40,000 reviews' },
-  ];
-  return (
-    <section style={{ background: 'var(--bg-elev-1)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
-      <div className="gf-container" style={{ padding: '56px 32px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
-          {stats.map((s, i) => (
-            <Reveal key={i} delay={i * 80}>
-              <Stat {...s} />
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-export function Stat({ v, pre = '', suf = '', l, sub }) {
-  const [ref, inView] = useInView();
-  const animatedV = inView ? v : 0;
-  const display = animatedV >= 1000 ? animatedV.toLocaleString(undefined, { maximumFractionDigits: 0 }) : animatedV.toFixed(animatedV < 10 ? 1 : 0);
-  return (
-    <div ref={ref} style={{ borderTop: '1px solid var(--border)', paddingTop: 18 }}>
-      <div className="gf-price-num" style={{ fontSize: 48, fontWeight: 300 }}>
-        {pre}<CountTo target={v} inView={inView} />{suf}
-      </div>
-      <div style={{ fontSize: 14, fontWeight: 500, marginTop: 8 }}>{l}</div>
-      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{sub}</div>
-    </div>
-  );
-}
 export function CountTo({ target, inView, duration = 1400 }) {
   const [val, setVal] = React.useState(0);
   React.useEffect(() => {
@@ -423,4 +387,3 @@ export function AppChart({ val, delta, data }) {
     </div>
   );
 }
-
