@@ -13,12 +13,6 @@ export function HeroEditorial({ onLaunch }) {
     <section style={{ position: 'relative', minHeight: '92vh', overflow: 'hidden', background: 'var(--bg-primary)' }} className="gf-grain">
       <div className="gf-grid-bg" />
       <div className="gf-guilloche" />
-      {/* Decorative numerals: banknote serial number */}
-      <div style={{ position: 'absolute', top: 96, right: 32, fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--text-tertiary)', textAlign: 'right', lineHeight: 1.7 }}>
-        SERIAL · GF–204871–24K<br />
-        ASSAY · 999.9 FINE · 24K<br />
-        BACKED · XAUT · TETHER GOLD
-      </div>
 
       <div className="gf-container" style={{ position: 'relative', paddingTop: 96, paddingBottom: 72 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 64, alignItems: 'end', minHeight: '70vh' }}>
@@ -83,20 +77,7 @@ export function HeroVaultPlate() {
         boxShadow: '0 60px 120px rgba(212,160,18,0.35), 0 30px 60px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.5) inset',
         transform: 'perspective(1200px) rotateX(8deg) rotateY(-12deg)',
       }}>
-        {/* Stamps */}
-        <div style={{ position: 'absolute', inset: '0', padding: '8% 10%', color: '#1F1A08', fontFamily: 'var(--font-display)' }}>
-          <div style={{ borderTop: '1px solid rgba(31,26,8,0.3)', borderBottom: '1px solid rgba(31,26,8,0.3)', padding: '14px 0', textAlign: 'center', marginBottom: 'auto' }}>
-            <div style={{ fontSize: 11, letterSpacing: '0.4em', fontFamily: 'var(--font-mono)', opacity: 0.7 }}>24K · FINE GOLD · 999.9</div>
-          </div>
-          <div style={{ position: 'absolute', top: '36%', left: 0, right: 0, textAlign: 'center' }}>
-            <div style={{ fontSize: 14, fontFamily: 'var(--font-mono)', letterSpacing: '0.25em', opacity: 0.7, color: '#1F1A08' }}>10.000 GRAMS</div>
-          </div>
-          <div style={{ position: 'absolute', bottom: '12%', left: '10%', right: '10%', display: 'flex', justifyContent: 'space-between', fontSize: 10, fontFamily: 'var(--font-mono)', opacity: 0.6, letterSpacing: '0.2em' }}>
-            <span>SERIAL 204871</span>
-            <span>XAUT · 1:1</span>
-          </div>
-        </div>
-      </div>
+    </div>
 
       {/* Floating live price chip */}
       <div style={{
@@ -113,7 +94,7 @@ export function HeroVaultPlate() {
           <span className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>24K · INR / gram</span>
         </div>
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 400, letterSpacing: '-0.03em' }}>
-          ₹{(7700 + val * 0.005).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          ₹{(15369 + val * 0.005).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         </div>
         <div style={{ fontSize: 12, color: delta >= 0 ? 'var(--success)' : 'var(--error)', fontFamily: 'var(--font-mono)' }}>
           {delta >= 0 ? '▲' : '▼'} ₹{Math.abs(delta * 3).toFixed(0)} · 24h
@@ -136,11 +117,11 @@ export function HeroVaultPlate() {
           <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--gold-bright)', color: 'var(--gold-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13 }}>✓</div>
           <div>
             <div style={{ fontSize: 13, fontWeight: 600 }}>Gold credited to your vault</div>
-            <div style={{ fontSize: 11, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>BAR–204871 · 0.0648 g · ₹500</div>
+            <div style={{ fontSize: 11, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>0.0648 g · ₹500</div>
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-muted)', borderTop: '1px solid var(--border-subtle)', paddingTop: 8, fontFamily: 'var(--font-mono)' }}>
-          <span>UPI · PRIYA@HDFC</span>
+          <span>UPI · PRIYA@HDFCBANK</span>
           <span>09:42 IST</span>
         </div>
       </div>
@@ -239,9 +220,9 @@ export function HeroChartCard({ data, val, delta }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, paddingTop: 16, borderTop: '1px solid var(--border-subtle)' }}>
           {[
-            ['Open', '₹7,684'],
-            ['High', '₹7,742'],
-            ['Low', '₹7,672'],
+            ['Open', '15,123'],
+            ['High', '₹15,369'],
+            ['Low', '₹14,945'],
             ['Vol', '184 kg'],
           ].map(([l, v]) => (
             <div key={l}>
@@ -389,4 +370,3 @@ Now in your pocket. Save ₹100 at a time into Tether Gold (XAUT), where each to
     </section>
   );
 }
-
