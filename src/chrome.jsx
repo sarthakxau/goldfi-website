@@ -137,7 +137,7 @@ export function Footer() {
               <a href="/"><img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} /></a>
             </div>
             <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 280 }}>
-              Real 24K gold savings, on your phone. Buy from ₹100 with UPI — backed gram-for-gram by Tether Gold (XAUT).
+              Save into 24K gold, on your phone. Buy from ₹100 with UPI — settled into Tether Gold (XAUT), where 1 token = 1 troy ounce of LBMA Good Delivery bullion.
             </p>
             <div style={{ marginTop: 24 }}>
               <a href="/#waitlist" className="gf-cta" style={{ padding: '10px 18px', fontSize: 13 }}>
@@ -161,7 +161,7 @@ export function Footer() {
           <div>© 2026 Bullion Digital (BVI) Ltd. All rights reserved. Gold purchases are subject to GST. Past performance does not guarantee future returns.</div>
           <div style={{ display: 'flex', gap: 18, alignItems: 'center', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.18em', fontSize: 11 }}>
             <span>XAUT-backed</span>
-            <span>On-chain audited</span>
+            <span>On-chain verifiable</span>
             <span>UPI · NPCI</span>
             <ThemeSwitcher />
           </div>

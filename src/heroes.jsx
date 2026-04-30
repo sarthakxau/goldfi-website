@@ -36,7 +36,7 @@ export function HeroEditorial({ onLaunch }) {
             </Reveal>
             <Reveal delay={220}>
               <p className="gf-lede" style={{ marginBottom: 36, maxWidth: 480 }}>
-                A SIP for gold. Save ₹100 at a time over UPI — instantly converted into real 24K gold backed gram-for-gram by Tether Gold (XAUT). Sell back to your bank, gift grams to friends, or redeem as a physical coin.
+                A SIP for gold. Save ₹100 at a time over UPI — settled into Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether's London custodian. Your balance shows in grams. Sell back to your bank, gift grams to friends, or redeem as a physical coin.
               </p>
             </Reveal>
             <Reveal delay={320}>
@@ -46,7 +46,7 @@ export function HeroEditorial({ onLaunch }) {
                   <ArrowRight size={14} strokeWidth={1.8} />
                 </button>
                 <button className="gf-cta-ghost">Watch 90-second tour</button>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 6 }}>Start from ₹10 · No paperwork</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 6 }}>Start from ₹100 · No paperwork</span>
               </div>
             </Reveal>
             <Reveal delay={420}>
@@ -188,7 +188,7 @@ export function HeroTicker({ onLaunch }) {
             </Reveal>
             <Reveal delay={200}>
               <p className="gf-lede" style={{ marginBottom: 32, maxWidth: 520 }}>
-                A SIP for gold. ₹100 at a time, instantly converted into 24K metal backed gram-for-gram by Tether Gold (XAUT). Buy via UPI, sell back to your bank, set up autopay, or send grams as a gift — all without ever touching a wallet, address, or token name.
+                A SIP for gold. ₹100 at a time, settled into Tether Gold (XAUT) — each token backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. Buy via UPI, sell back to your bank, set up autopay, or send grams as a gift — all without ever touching a wallet, address, or token name.
               </p>
             </Reveal>
             <Reveal delay={300}>
@@ -333,7 +333,7 @@ export function HeroDramatic({ onLaunch }) {
         </Reveal>
         <Reveal delay={200}>
           <p className="gf-lede" style={{ margin: '0 auto 40px', textAlign: 'center' }}>
-Now in your pocket. Save ₹100 at a time into 24K gold, backed gram-for-gram by Tether Gold (XAUT). Sell back to your bank in fifteen minutes. Redeem as a coin once you cross 1 tola.
+Now in your pocket. Save ₹100 at a time into Tether Gold (XAUT), where each token represents a troy ounce of LBMA Good Delivery 24K bullion. Sell back to your bank in fifteen minutes. Redeem as a coin once you cross 1 tola.
           </p>
         </Reveal>
         <Reveal delay={300}>

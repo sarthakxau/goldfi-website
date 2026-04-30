@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles.css';
 
-import { ThemeSwitcher, TopNav, PriceStrip, Footer } from './chrome';
+import { TopNav, PriceStrip, Footer } from './chrome';
 import { HeroEditorial, HeroTicker, HeroDramatic } from './heroes';
 import { HowItWorks, SecuritySection, AppShowcase } from './sections';
 import { AutoSave, FAQ } from './sections2';
@@ -17,8 +17,6 @@ const TWEAK_DEFAULTS = {
   "theme": "noir",
   "accent": "#F5B832",
   "fontDisplay": "Fraunces",
-  "density": "comfortable",
-  "headline": "default",
   "showGrain": true
 };
 
@@ -40,13 +38,6 @@ const ACCENT_OPTIONS = [
   { value: '#B8860B', label: 'Deep Gold' },
   { value: '#E4A500', label: '22k' },
 ];
-
-const HEADLINES = {
-  default:  null,
-  hedge:    'The hedge that *outlasted* every empire.',
-  simple:   'Real gold. *Real vaults.* Real ownership.',
-  modern:   'Money that *predates* the internet — now powered by it.',
-};
 
 function Landing() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);

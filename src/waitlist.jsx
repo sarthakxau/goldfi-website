@@ -47,8 +47,6 @@ export function Waitlist() {
             <Reveal delay={240}>
               <div style={{ display: 'flex', gap: 36, flexWrap: 'wrap', marginBottom: 8 }}>
                 {[
-                  // { v: '4,218', l: 'On the waitlist' },
-                  // { v: '142', l: 'Invited this week' },
                   { v: 'Q2 2026', l: 'Public launch' },
                 ].map((s) => (
                   <div key={s.l} style={{ borderLeft: '1px solid var(--border)', paddingLeft: 16 }}>
@@ -67,7 +65,7 @@ export function Waitlist() {
                 <form onSubmit={submit}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
                     <div className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>Reserve your spot</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>~30 seconds</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>~10 seconds</div>
                   </div>
 
                   <label style={{ display: 'block', marginBottom: 14 }}>
@@ -118,7 +116,7 @@ export function Waitlist() {
                         { id: 'sip', label: 'Daily / weekly SIP' },
                         { id: 'lump', label: 'Lump-sum savings' },
                         { id: 'gift', label: 'Gifting gold' },
-                        { id: 'yield', label: 'Earning yield on gold' },
+                        { id: 'redeem', label: 'Redeem as physical coins' },
                       ].map((opt) => (
                         <label key={opt.id} style={{
                           display: 'flex', alignItems: 'center', gap: 10,
@@ -184,4 +182,3 @@ export function Waitlist() {
     </section>
   );
 }
-

@@ -12,14 +12,14 @@ function LegalShell({ kind, title, children }) {
           </a>
         </div>
         <div style={{ marginBottom: 8, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold-bright)' }}>
-          {kind} · DRAFT
+          {kind}
         </div>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 1.05, margin: '0 0 12px' }}>
           {title}
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 8 }}>goldfi platform — India</p>
         <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', marginBottom: 56 }}>
-          Effective Date: TBD &nbsp;·&nbsp; Last Updated: April 2026
+          Effective Date: 30 April 2026 &nbsp;·&nbsp; Last Updated: April 2026
         </p>
         <div style={{ fontSize: 15.5, lineHeight: 1.7, color: 'var(--text-secondary)' }}>
           {children}
@@ -105,8 +105,6 @@ export function TermsPage() {
       <P>2.2 <Strong>“Virtual Digital Asset” or “VDA”</Strong> has the meaning assigned under Section 2(47A) of the Income Tax Act, 1961.</P>
       <P>2.3 <Strong>“Scudo”</Strong> means a unit of account used on the Platform to denominate a User's Digital Gold holdings, where 1 Scudo = [defined gold-equivalent weight]. Scudo is not legal tender, is not a regulated financial instrument, and has no independent value apart from its Digital Gold backing.</P>
       <P>2.4 <Strong>“Wallet”</Strong> means the blockchain-based digital wallet associated with a User's account on the Platform, which stores the User's VDA holdings.</P>
-      <P>2.5 <Strong>“Card”</Strong> means the virtual or physical Visa prepaid card issued through a licensed card issuer partner, enabling Users to spend against their Digital Gold holdings.</P>
-      <P>2.6 <Strong>“Yield Product”</Strong> means the lending or staking feature that allows Users to earn returns on their Digital Gold holdings, subject to separate terms and risk disclosures.</P>
 
       <H2>3. Eligibility</H2>
       <P>3.1 You must be at least 18 years of age and a resident of India to use the Platform.</P>
@@ -125,8 +123,6 @@ export function TermsPage() {
       <P><Strong>5.1 Buy Digital Gold.</Strong> Users may purchase Digital Gold using Indian Rupees (INR) through the Platform. Purchases are executed at the prevailing real-time market price of gold, inclusive of any applicable spread.</P>
       <P><Strong>5.2 Sell / Redeem Digital Gold.</Strong> Users may sell their Digital Gold holdings for INR or, where available, redeem for physical gold through participating jewelers. Redemption is subject to minimum quantity requirements, delivery charges, making charges, and applicable taxes.</P>
       <P><Strong>5.3 Hold Digital Gold.</Strong> Users may hold Digital Gold in their Wallet. Holdings are denominated in grams, INR, USD, and Scudo. The Platform displays live gold pricing sourced from international spot gold markets.</P>
-      <P><Strong>5.4 Yield Product.</Strong> RISK WARNING: The Yield Product involves lending your Digital Gold to third-party borrowers or protocols. Returns are not guaranteed and are subject to counterparty risk, smart contract risk, and market risk. You may lose some or all of your Digital Gold deposited in the Yield Product.</P>
-      <P><Strong>5.5 Card Services.</Strong> Where available, Users may apply for a virtual or physical Visa card linked to their Digital Gold holdings. Card services may not be available in India pending receipt of applicable regulatory approvals.</P>
 
       <H2>6. Fees and Taxes</H2>
       <Table
@@ -136,7 +132,6 @@ export function TermsPage() {
           ['Sell Spread', 'Markdown on gold sale price', '[X]%'],
           ['Platform Fee', 'Service fee on transactions', '[X]%'],
           ['Withdrawal Fee', 'INR withdrawal to bank', '₹[X]'],
-          ['Card Load Fee', 'Loading Digital Gold to card', '[X]%'],
           ['Physical Redemption', 'Delivery of physical gold', 'Varies'],
         ]}
       />
@@ -150,8 +145,7 @@ export function TermsPage() {
       <P><Strong>7.4 Technology Risk.</Strong> Blockchain transactions are irreversible. Loss of wallet credentials may result in permanent loss of Digital Gold.</P>
       <P><Strong>7.5 Custody Risk.</Strong> The Platform is not a bank or depository and does not provide deposit insurance.</P>
       <P><Strong>7.6 Liquidity Risk.</Strong> There is no guarantee that you will be able to sell or redeem your Digital Gold at any given time or at a favorable price.</P>
-      <P><Strong>7.7 Yield Product Risk.</Strong> Additional risks including counterparty default, smart contract failure, impermanent loss, and protocol-level exploits.</P>
-      <P><Strong>7.8 FX Risk.</Strong> Fluctuations in the INR/USD exchange rate affect the INR value of your holdings.</P>
+      <P><Strong>7.7 FX Risk.</Strong> Fluctuations in the INR/USD exchange rate affect the INR value of your holdings.</P>
 
       <H2>8. Prohibited Activities</H2>
       <P>You shall not: use the Platform for money laundering, terrorist financing, or any activity prohibited under the PMLA; provide false KYC information; circumvent foreign exchange controls under FEMA; use automated bots or scrapers; reverse-engineer Platform software; engage in wash trading or market manipulation; transfer your account to any third party; or use the Platform on behalf of any minor.</P>
@@ -249,7 +243,7 @@ export function PrivacyPage() {
 
       <H2>5. Data Sharing and Transfers</H2>
       <P><Strong>5.1</Strong> Your personal data is shared between Bullion BVI and the Indian Partner under a data processing agreement.</P>
-      <P><Strong>5.2 Third-Party Sharing:</Strong> KYC providers (Persona/Onfido), blockchain analytics (Chainalysis), payment processors, card issuer partner, cloud infrastructure (AWS/GCP), FIU-IND, Income Tax Department, CKYCR, and law enforcement as legally required.</P>
+      <P><Strong>5.2 Third-Party Sharing:</Strong> KYC providers (Persona/Onfido), blockchain analytics (Chainalysis), payment processors, cloud infrastructure (AWS/GCP), FIU-IND, Income Tax Department, CKYCR, and law enforcement as legally required.</P>
       <P><Strong>5.3 Cross-Border Transfers:</Strong> Data is transferred to the British Virgin Islands and may be processed on servers in the US, EU, and Singapore, in compliance with Section 16 of the DPDPA, 2023. Appropriate safeguards including encryption and contractual clauses are implemented.</P>
 
       <H2>6. Data Retention</H2>
