@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles.css';
 
@@ -7,11 +7,12 @@ import { HeroEditorial, HeroTicker, HeroDramatic } from './heroes';
 import { HowItWorks, SecuritySection, AppShowcase } from './sections';
 import { AutoSave, FAQ } from './sections2';
 import { Waitlist } from './waitlist';
+import { TermsPage, PrivacyPage } from './legal';
 import {
-  TweaksPanel, TweakSection, TweakToggle, TweakRadio, TweakSelect,
+  useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakRadio, TweakSelect,
 } from './tweaks-panel';
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "heroVariant": "editorial",
   "theme": "noir",
   "accent": "#F5B832",
@@ -19,7 +20,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "density": "comfortable",
   "headline": "default",
   "showGrain": true
-}/*EDITMODE-END*/;
+};
 
 const HERO_VARIANTS = [
   { value: 'editorial', label: 'Editorial' },
@@ -51,7 +52,7 @@ function Landing() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   // On mount, hydrate theme from localStorage if it differs from the tweak default
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       const saved = localStorage.getItem('gf-theme');
       if (saved && saved !== tweaks.theme) setTweak('theme', saved);
@@ -60,14 +61,14 @@ function Landing() {
   }, []);
 
   // Apply theme + broadcast so the footer ThemeSwitcher stays in sync
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.setAttribute('data-theme', tweaks.theme);
     try { localStorage.setItem('gf-theme', tweaks.theme); } catch (e) {}
     window.dispatchEvent(new CustomEvent('gf-theme-change', { detail: tweaks.theme }));
   }, [tweaks.theme]);
 
   // Listen for theme changes coming from the footer ThemeSwitcher
-  React.useEffect(() => {
+  useEffect(() => {
     const onChange = (e) => {
       if (e.detail !== tweaks.theme) setTweak('theme', e.detail);
     };
@@ -80,7 +81,7 @@ function Landing() {
 
   // When theme changes, reset accent to that theme's default
   const prevThemeRef = React.useRef(tweaks.theme);
-  React.useEffect(() => {
+  useEffect(() => {
     if (prevThemeRef.current !== tweaks.theme) {
       const def = THEME_ACCENT_DEFAULTS[tweaks.theme];
       if (def) setTweak('accent', def);
@@ -89,12 +90,12 @@ function Landing() {
   }, [tweaks.theme, setTweak]);
 
   // Apply accent
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.style.setProperty('--gold-bright', tweaks.accent);
   }, [tweaks.accent]);
 
   // Apply display font
-  React.useEffect(() => {
+  useEffect(() => {
     const fam = tweaks.fontDisplay === 'DM Sans'
       ? `'DM Sans', sans-serif`
       : `'${tweaks.fontDisplay}', Georgia, serif`;
@@ -102,7 +103,7 @@ function Landing() {
   }, [tweaks.fontDisplay]);
 
   // Grain toggle
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.style.setProperty('--grain-opacity', tweaks.showGrain ? '0.18' : '0');
   }, [tweaks.showGrain]);
 
@@ -156,4 +157,25 @@ function Landing() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<Landing />);
+// Minimal pathname-based router. Vite dev/preview servers fall back to
+// index.html for unknown paths automatically; production deploys need an
+// SPA rewrite (see vercel.json).
+function LegalRoute({ children }) {
+  const onLaunch = () => { window.location.assign('/#waitlist'); };
+  return (
+    <>
+      <TopNav onLaunch={onLaunch} />
+      {children}
+      <Footer />
+    </>
+  );
+}
+
+function Root() {
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  if (path === '/terms')   return <LegalRoute><TermsPage /></LegalRoute>;
+  if (path === '/privacy') return <LegalRoute><PrivacyPage /></LegalRoute>;
+  return <Landing />;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Root />);

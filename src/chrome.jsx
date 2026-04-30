@@ -61,19 +61,23 @@ export function TopNav({ onLaunch }) {
       transition: 'all 240ms var(--ease-out)',
     }}>
       <div className="gf-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <img src="/logo.svg" alt="goldfi" style={{ height: 28, width: 'auto', display: 'block' }} />
         </a>
         <nav style={{ display: 'flex', gap: 28, alignItems: 'center', fontSize: 14, color: 'var(--text-secondary)' }}>
-          {['Product', 'Security', 'Learn', 'Company'].map((x) => (
-            <a key={x} href={'#' + x.toLowerCase()} style={{ transition: 'color 150ms' }}
+          {[
+            { label: 'Product',  hash: 'product' },
+            { label: 'Security', hash: 'security' },
+            { label: 'Learn',    hash: 'learn' },
+          ].map((x) => (
+            <a key={x.label} href={'/#' + x.hash} style={{ transition: 'color 150ms' }}
                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
-               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}>{x}</a>
+               onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}>{x.label}</a>
           ))}
         </nav>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-          <a href="#waitlist" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Sign in</a>
-          <button className="gf-cta" onClick={onLaunch} style={{ padding: '10px 18px', fontSize: 14 }}>
+          <a href="/#waitlist" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Sign in</a>
+          <button className="gf-cta" onClick={onLaunch || (() => { window.location.assign('/#waitlist'); })} style={{ padding: '10px 18px', fontSize: 14 }}>
             Join waitlist
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
           </button>
@@ -116,26 +120,26 @@ export function PriceStrip() {
 
 export function Footer() {
   const cols = [
-    { h: 'Product', items: ['Buy gold', 'Sell gold', 'Daily SIP', 'Gift gold', 'Yield', 'Redeem coins'] },
-    { h: 'Security', items: ['Vault custody', 'Insurance', 'Audits', 'Disclosures'] },
-    { h: 'Company', items: ['About', 'Careers', 'Blog', 'Brand kit', 'Contact'] },
-    { h: 'Resources', items: ['Help center', 'Learn', 'Gold rate today', 'Status'] },
-    { h: 'Legal', items: ['Terms', 'Privacy', 'Grievance redressal', 'Cookies'] },
+    { h: 'Company', items: [{ label: 'Contact', href: 'mailto:help@bulliondigital.io' }] },
+    { h: 'Legal', items: [
+      { label: 'Terms', href: '/terms' },
+      { label: 'Privacy', href: '/privacy' },
+    ] },
   ];
   return (
     <footer style={{ background: 'var(--bg-deep)', borderTop: '1px solid var(--border-subtle)', position: 'relative', overflow: 'hidden' }}>
       <div className="gf-guilloche" />
       <div className="gf-container" style={{ position: 'relative', padding: '80px 32px 40px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(5, 1fr)', gap: 40, marginBottom: 64 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(2, 1fr)', gap: 40, marginBottom: 64 }}>
           <div>
             <div style={{ marginBottom: 16 }}>
-              <img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} />
+              <a href="/"><img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} /></a>
             </div>
             <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 280 }}>
               Real 24K gold savings, on your phone. Buy from ₹100 with UPI — backed gram-for-gram by Tether Gold (XAUT).
             </p>
             <div style={{ marginTop: 24 }}>
-              <a href="#waitlist" className="gf-cta" style={{ padding: '10px 18px', fontSize: 13 }}>
+              <a href="/#waitlist" className="gf-cta" style={{ padding: '10px 18px', fontSize: 13 }}>
                 Join the waitlist
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
               </a>
@@ -146,7 +150,7 @@ export function Footer() {
               <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold-bright)', marginBottom: 16 }}>{c.h}</h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {c.items.map((i) => (
-                  <li key={i}><a href="#" style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>{i}</a></li>
+                  <li key={i.label}><a href={i.href} style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>{i.label}</a></li>
                 ))}
               </ul>
             </div>
@@ -166,4 +170,3 @@ export function Footer() {
   );
 }
 
-Object.assign(window, { TopNav, PriceStrip, Footer, ThemeSwitcher });
