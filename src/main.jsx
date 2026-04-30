@@ -7,7 +7,9 @@ import { HeroEditorial, HeroTicker, HeroDramatic } from './heroes';
 import { HowItWorks, SecuritySection, AppShowcase } from './sections';
 import { AutoSave, FAQ } from './sections2';
 import { Waitlist } from './waitlist';
-import { TermsPage, PrivacyPage } from './legal';
+import TermsPage from './terms-page';
+import PrivacyPage from './privacy-page';
+
 import {
   useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakRadio, TweakSelect,
 } from './tweaks-panel';
