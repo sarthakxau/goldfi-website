@@ -9,23 +9,28 @@ function ThemeSwitcher() {
     { id: 'ivory', label: 'Ivory' },
   ];
   const [theme, setTheme] = React.useState(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof window === 'undefined') return 'noir';
+    try {
+      return localStorage.getItem('gf-theme') || document.documentElement.getAttribute('data-theme') || 'noir';
+    } catch (e) {
       return document.documentElement.getAttribute('data-theme') || 'noir';
     }
-    return 'noir';
   });
-  // Listen for external theme changes (e.g. Tweaks panel) so the segmented
-  // control stays in sync.
+
   React.useEffect(() => {
     const onChange = (e) => setTheme(e.detail);
     window.addEventListener('gf-theme-change', onChange);
     return () => window.removeEventListener('gf-theme-change', onChange);
   }, []);
+
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   const apply = (t) => {
     setTheme(t);
     document.documentElement.setAttribute('data-theme', t);
     try { localStorage.setItem('gf-theme', t); } catch (e) {}
-    // Notify the rest of the app (Tweaks panel, etc.)
     window.dispatchEvent(new CustomEvent('gf-theme-change', { detail: t }));
   };
   return (
@@ -137,7 +142,7 @@ export function Footer() {
               <a href="/"><img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} /></a>
             </div>
             <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 280 }}>
-              Save into 24K gold, on your phone. Buy from ₹100 with UPI, settled into Tether Gold (XAUT), where 1 token = 1 troy ounce of LBMA Good Delivery bullion.
+              Save into 24K gold on your phone. Buy from ₹100 with UPI, settled into Tether Gold (XAUT).
             </p>
             <div style={{ marginTop: 24 }}>
               <a href="/#waitlist" className="gf-cta" style={{ padding: '10px 18px', fontSize: 13 }}>
