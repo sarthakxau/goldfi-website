@@ -7,8 +7,8 @@ import { Sparkline, Reveal, PhoneMini, useLivePrice, genPriceData } from '../../
 export function HowItWorks() {
   const steps = [
     { n: '01', t: 'Sign up in 60 seconds', d: 'Just your phone number to start. PAN/DigiLocker KYC takes another two minutes, and is required before your first buy.', icon: 'id' },
-    { n: '02', t: 'Buy with UPI', d: 'From ₹100. Pay over UPI; we settle your purchase in Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. Your balance shows in grams.', icon: 'buy' },
-    { n: '03', t: 'Sell, gift, or redeem', d: 'Sell back to your bank in 15 minutes. Send grams to anyone via a link. Redeem 24K coins or jewellery once you cross 1 tola.', icon: 'send' },
+    { n: '02', t: 'Buy with UPI', d: 'From ₹100. Pay over UPI; we settle your purchase in Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion.', icon: 'buy' },
+    { n: '03', t: 'Sell, gift, or redeem', d: 'Sell back to your bank in 15 minutes. Send grams to anyone via a link. Redeem 24K coins or jewellery once you cross 1 tola from your nearest Jeweller.', icon: 'send' },
   ];
   return (
     <section id="product" style={{ padding: '120px 0', position: 'relative' }}>
@@ -74,7 +74,7 @@ export function SecuritySection() {
             </p></Reveal>
             <div style={{ display: 'grid', gap: 0 }}>
               {[
-                ['Backed 1:1 by Tether Gold (XAUT)', '1 XAUT = 1 troy ounce of LBMA Good Delivery 24K bullion held by Tether’s London custodian. Your balance shows in grams.'],
+                ['Backed 1:1 by Tether Gold (XAUT)', '1 XAUT = 1 troy ounce of LBMA Good Delivery 24K bullion held by Tether’s London custodian.'],
                 ['On-chain verifiable, 24/7', 'Your XAUT balance is visible on Ethereum at any time. Every transaction comes with a block-explorer link you can audit yourself.'],
                 ['Independent reserve attestations', 'Tether publishes periodic attestations of the physical bullion backing XAUT, prepared by a third-party attestation firm. Reports are publicly available.'],
                 ['ISO 27001-aligned + DigiLocker KYC', 'Encryption at rest and in transit. We hold no card or UPI credentials; those stay with your bank.'],
@@ -102,7 +102,7 @@ export function SecuritySection() {
 function VaultDiagram() {
   const nodes = [
     { label: 'BACKED · XAUT',     sub: 'Tether Gold · 1:1',    start: -70,  dur: 14 },
-    { label: 'CHAIN · ETHEREUM',  sub: 'On-chain auditable',    start:  20,  dur: 18 },
+    { label: 'CHAIN · ETHEREUM',  sub: 'On-chain verifiable',    start:  20,  dur: 18 },
     { label: 'STANDARD · 1 oz',   sub: '1 XAUT = 1 troy oz',   start: 110,  dur: 22 },
     { label: 'ATTESTED',          sub: 'Reserve reports',       start: 200,  dur: 16 },
   ];

@@ -82,7 +82,7 @@ export function TopNav({ onLaunch }) {
           ))}
         </nav>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-          <a href="/#waitlist" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Sign in</a>
+          {/* <a href="/#waitlist" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Sign in</a>*/}
           <button className="gf-cta" onClick={onLaunch || (() => { window.location.assign('/#waitlist'); })} style={{ padding: '10px 18px', fontSize: 14 }}>
             Join waitlist
             <ArrowRight size={14} strokeWidth={1.8} />

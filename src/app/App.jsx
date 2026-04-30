@@ -21,7 +21,7 @@ function Landing() {
     <div data-screen-label="Landing · Gold.Fi" style={{ minHeight: '100vh' }}>
       <TopNav onLaunch={onLaunch} />
       <HeroEditorial onLaunch={onLaunch} />
-      <PriceStrip />
+      {/* <PriceStrip />*/}
       <HowItWorks />
       <SecuritySection />
       <AppShowcase />

@@ -171,7 +171,7 @@ export function Waitlist() {
           <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap', alignItems: 'center', flex: 1, justifyContent: 'flex-end', fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--text-muted)', letterSpacing: '0.02em' }}>
             <span>Tether Gold (XAUT)</span>
             <span style={{ color: 'var(--border-strong)' }}>·</span>
-            <span>On-chain auditable</span>
+            <span>On-chain verifiable</span>
             <span style={{ color: 'var(--border-strong)' }}>·</span>
             <span>UPI · NPCI</span>
             <span style={{ color: 'var(--border-strong)' }}>·</span>
