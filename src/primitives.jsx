@@ -59,7 +59,7 @@ export function GoldCoinSVG({ size = 120, style = {} }) {
 }
 
 // Live price ticker — generates a small smooth random walk around base
-function useLivePrice(base = 2384.50, drift = 0.0003) {
+export function useLivePrice(base = 2384.50, drift = 0.0003) {
   const [val, setVal] = React.useState(base);
   const [delta, setDelta] = React.useState(0);
   const [pulse, setPulse] = React.useState(0);
@@ -96,7 +96,7 @@ export function Sparkline({ data, width = 200, height = 50, stroke = 'var(--gold
 }
 
 // Generates synthetic price-history data
-function genPriceData(n = 80, base = 2380, vol = 18) {
+export function genPriceData(n = 80, base = 2380, vol = 18) {
   const out = [];
   let v = base - vol;
   for (let i = 0; i < n; i++) {
@@ -125,7 +125,7 @@ function useCountUp(target, duration = 1600) {
 }
 
 // Hook: in-view trigger
-function useInView(opts = { threshold: 0.18 }) {
+export function useInView(opts = { threshold: 0.18 }) {
   const ref = React.useRef(null);
   const [inView, setInView] = React.useState(false);
   React.useEffect(() => {
@@ -172,4 +172,3 @@ export function PhoneMini({ children, scale = 1, style = {} }) {
   );
 }
 
-Object.assign(window, { GoldBarSVG, GoldCoinSVG, useLivePrice, Sparkline, genPriceData, useCountUp, useInView, Reveal, PhoneMini });

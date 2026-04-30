@@ -1,4 +1,5 @@
 import React from 'react';
+import { Check } from 'lucide-react';
 import { Reveal } from './primitives';
 
 // Waitlist section — pre-launch capture form
@@ -46,8 +47,8 @@ export function Waitlist() {
             <Reveal delay={240}>
               <div style={{ display: 'flex', gap: 36, flexWrap: 'wrap', marginBottom: 8 }}>
                 {[
-                  { v: '4,218', l: 'On the waitlist' },
-                  { v: '142', l: 'Invited this week' },
+                  // { v: '4,218', l: 'On the waitlist' },
+                  // { v: '142', l: 'Invited this week' },
                   { v: 'Q2 2026', l: 'Public launch' },
                 ].map((s) => (
                   <div key={s.l} style={{ borderLeft: '1px solid var(--border)', paddingLeft: 16 }}>
@@ -143,7 +144,7 @@ export function Waitlist() {
               ) : (
                 <div style={{ padding: '12px 0' }}>
                   <div style={{ width: 56, height: 56, borderRadius: 999, background: 'rgba(20,192,136,0.14)', color: 'var(--success)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-10" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    <Check size={28} strokeWidth={2.4} />
                   </div>
                   <h3 className="gf-h3" style={{ marginBottom: 8 }}>You're in.</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 24, lineHeight: 1.55 }}>
@@ -184,4 +185,3 @@ export function Waitlist() {
   );
 }
 
-Object.assign(window, { Waitlist });

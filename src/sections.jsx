@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sparkline, Reveal, PhoneMini } from './primitives';
+import { Check, ArrowRight } from 'lucide-react';
+import { Sparkline, Reveal, PhoneMini, useInView, useLivePrice, genPriceData } from './primitives';
 
 // Mid-page sections: stats, how it works, security, app showcase, IRA, testimonials, FAQ
 
@@ -139,7 +140,7 @@ export function SecuritySection() {
                 <Reveal key={t} delay={200 + i * 80}>
                   <div style={{ display: 'flex', gap: 14, padding: '18px 0', borderTop: i === 0 ? 'none' : '1px solid var(--border)' }}>
                     <div style={{ flexShrink: 0, width: 28, height: 28, borderRadius: 8, background: 'rgba(245,184,50,0.12)', color: 'var(--gold-bright)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      <Check size={14} strokeWidth={1.8} />
                     </div>
                     <div>
                       <div style={{ fontWeight: 600, fontSize: 15 }}>{t}</div>
@@ -306,7 +307,7 @@ export function AppShowcase() {
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 56 }}>
           <a href="#waitlist" className="gf-cta" style={{ padding: '14px 26px' }}>
             Join the waitlist
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+            <ArrowRight size={14} strokeWidth={1.8} />
           </a>
         </div>
       </div>
@@ -426,4 +427,3 @@ export function AppChart({ val, delta, data }) {
   );
 }
 
-Object.assign(window, { StatsBand, HowItWorks, SecuritySection, AppShowcase });

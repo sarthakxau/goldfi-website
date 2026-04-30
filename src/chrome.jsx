@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 
 // Site chrome — top nav + footer + price marquee strip
 
@@ -79,7 +80,7 @@ export function TopNav({ onLaunch }) {
           <a href="/#waitlist" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Sign in</a>
           <button className="gf-cta" onClick={onLaunch || (() => { window.location.assign('/#waitlist'); })} style={{ padding: '10px 18px', fontSize: 14 }}>
             Join waitlist
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+            <ArrowRight size={14} strokeWidth={1.8} />
           </button>
         </div>
       </div>
@@ -141,7 +142,7 @@ export function Footer() {
             <div style={{ marginTop: 24 }}>
               <a href="/#waitlist" className="gf-cta" style={{ padding: '10px 18px', fontSize: 13 }}>
                 Join the waitlist
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+                <ArrowRight size={12} strokeWidth={1.8} />
               </a>
             </div>
           </div>

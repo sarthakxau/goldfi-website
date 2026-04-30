@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sparkline, Reveal } from './primitives';
+import { ArrowRight } from 'lucide-react';
+import { Sparkline, Reveal, useLivePrice, genPriceData } from './primitives';
 
 // 3 hero variants for Gold.Fi landing
 // Variant A: Editorial — big serif, asymmetric, vault photograph placeholder
@@ -42,7 +43,7 @@ export function HeroEditorial({ onLaunch }) {
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginBottom: 56 }}>
                 <button className="gf-cta" onClick={onLaunch}>
                   Join the waitlist
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+                  <ArrowRight size={14} strokeWidth={1.8} />
                 </button>
                 <button className="gf-cta-ghost">Watch 90-second tour</button>
                 <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 6 }}>Start from ₹10 · No paperwork</span>
@@ -339,7 +340,7 @@ Now in your pocket. Save ₹100 at a time into 24K gold, backed gram-for-gram by
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="gf-cta" onClick={onLaunch} style={{ padding: '16px 28px', fontSize: 16 }}>
               Join the waitlist
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+              <ArrowRight size={14} strokeWidth={1.8} />
             </button>
             <button className="gf-cta-ghost">See how it works</button>
           </div>
@@ -389,4 +390,3 @@ Now in your pocket. Save ₹100 at a time into 24K gold, backed gram-for-gram by
   );
 }
 
-Object.assign(window, { HeroEditorial, HeroTicker, HeroDramatic });
