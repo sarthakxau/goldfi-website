@@ -2,7 +2,7 @@ import React from 'react';
 import { Check } from 'lucide-react';
 import { Reveal } from './primitives';
 
-// Waitlist section — pre-launch capture form
+// Waitlist section: pre-launch capture form
 
 export function Waitlist() {
   const [email, setEmail] = React.useState('');
@@ -27,7 +27,7 @@ export function Waitlist() {
       <div className="gf-guilloche" />
       <div className="gf-container" style={{ position: 'relative' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 80, alignItems: 'center' }}>
-          {/* Left — pitch */}
+          {/* Left: pitch */}
           <div>
             <Reveal>
               <div className="gf-eyebrow" style={{ marginBottom: 24 }}>
@@ -47,6 +47,8 @@ export function Waitlist() {
             <Reveal delay={240}>
               <div style={{ display: 'flex', gap: 36, flexWrap: 'wrap', marginBottom: 8 }}>
                 {[
+                  // { v: '4,218', l: 'On the waitlist' },
+                  // { v: '142', l: 'Invited this week' },
                   { v: 'Q2 2026', l: 'Public launch' },
                 ].map((s) => (
                   <div key={s.l} style={{ borderLeft: '1px solid var(--border)', paddingLeft: 16 }}>
@@ -58,7 +60,7 @@ export function Waitlist() {
             </Reveal>
           </div>
 
-          {/* Right — form card */}
+          {/* Right: form card */}
           <Reveal delay={200}>
             <div className="gf-card-elev" style={{ padding: 32, position: 'relative', overflow: 'hidden' }}>
               {status !== 'done' ? (

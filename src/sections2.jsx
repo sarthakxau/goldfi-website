@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkline, Reveal } from './primitives';
 
-// Remaining sections: Auto-Save, FAQ
+// Remaining sections: Auto-Save (was IRA), FAQ
 
 export function AutoSave() {
   return (
@@ -13,7 +13,7 @@ export function AutoSave() {
             <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20 }}>Auto-save in gold</div></Reveal>
             <Reveal delay={80}><h2 className="gf-h2" style={{ marginBottom: 24 }}>A savings habit<br /><em>that protects itself.</em></h2></Reveal>
             <Reveal delay={160}><p className="gf-lede" style={{ marginBottom: 32 }}>
-Set up UPI Autopay once. Save ₹100 a week, ₹500 a month, or whatever fits your salary cycle — settled into Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. No lock-in. Withdraw anytime.
+Set up UPI Autopay once. Save ₹100 a week, ₹500 a month, or whatever fits your salary cycle. Each contribution settles into Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. No lock-in. Withdraw anytime.
             </p></Reveal>
             <Reveal delay={240}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 32 }}>
@@ -102,12 +102,12 @@ export function AutoSaveCard() {
 export function FAQ() {
   const items = [
     ['Is the gold actually mine?', 'Your balance is denominated in Tether Gold (XAUT), held to your account on Ethereum. Each XAUT token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether’s London custodian. Your XAUT holdings are publicly verifiable on-chain, and we never lend them. Once you cross 1 tola (~11.66 g) you can redeem 24K coins shipped insured to your door.'],
-    ['How is goldfi different from a Gold ETF or Sovereign Gold Bond?', 'Gold ETFs are fund-house paper that you can’t redeem for metal. Sovereign Gold Bonds lock you in for 8 years. With goldfi your savings sit in Tether Gold (XAUT) — backed 1:1 by allocated LBMA Good Delivery bullion — sellable back to your bank in minutes, gift-able by gram over UPI, and redeemable as a 24K physical coin once your balance crosses 1 tola.'],
-    ['What is XAUT, and do I need to know about crypto?', 'XAUT is Tether Gold — a digital token where each unit is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether’s custodian. We use it as the settlement layer because it is liquid, denominated in a clear unit, and your balance is publicly verifiable on Ethereum. You never have to think about crypto: you pay over UPI, see grams in the app, and sell back to your bank in INR.'],
+    ['How is goldfi different from a Gold ETF or Sovereign Gold Bond?', 'Gold ETFs are fund-house paper that you can’t redeem for metal. Sovereign Gold Bonds lock you in for 8 years. With goldfi your savings sit in Tether Gold (XAUT), backed 1:1 by allocated LBMA Good Delivery bullion, sellable back to your bank in minutes, gift-able by gram over UPI, and redeemable as a 24K physical coin once your balance crosses 1 tola.'],
+    ['What is XAUT, and do I need to know about crypto?', 'XAUT is Tether Gold, a digital token where each unit is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether’s custodian. We use it as the settlement layer because it is liquid, denominated in a clear unit, and your balance is publicly verifiable on Ethereum. You never have to think about crypto: you pay over UPI, see grams in the app, and sell back to your bank in INR.'],
     ['Where is the underlying gold held?', 'The gold backing XAUT is held by Tether’s London custodian as LBMA Good Delivery 24K bars. Your XAUT balance is visible on Ethereum at any time, and Tether publishes periodic attestations of the physical reserves prepared by a third-party firm.'],
     ['What are the charges and taxes?', 'Live spot price with a transparent buy/sell spread of around 0.5%. GST of 3% applies on each purchase. On sale, 1% TDS is withheld at source under Section 194S of the Income Tax Act, and gains are taxable at 30% under Section 115BBH (digital gold is treated as a Virtual Digital Asset in India). No making charges, no wastage, no hidden platform fees.'],
     ['Can I take physical delivery?', 'Yes, once your holdings cross 1 tola (~11.66 g). We ship 24K coins fully insured with signature on delivery, or you can redeem as jewellery at our partner stores nationwide.'],
-    ['Do I need KYC to start?', 'You can sign up with just your phone number to join the waitlist. Full KYC — PAN + DigiLocker — takes under 2 minutes and is required before your first buy. We hold no card or UPI credentials.'],
+    ['Do I need KYC to start?', 'You can sign up with just your phone number to join the waitlist. Full KYC (PAN + DigiLocker) takes under 2 minutes and is required before your first buy. We hold no card or UPI credentials.'],
     ['What if goldfi shuts down?', 'Your gold backing sits in XAUT, an independently issued token whose reserves are not on goldfi\'s balance sheet. In the unlikely event we wind down, your XAUT-backed claim survives and can be redeemed.'],
   ];
   const [open, setOpen] = React.useState(0);

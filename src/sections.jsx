@@ -1,13 +1,32 @@
 import React from 'react';
 import { UserCheck, Wallet, Send, Check, ArrowRight } from 'lucide-react';
-import { Sparkline, Reveal, PhoneMini, useLivePrice, genPriceData } from './primitives';
+import { Sparkline, Reveal, PhoneMini, useInView, useLivePrice, genPriceData } from './primitives';
 
-// Mid-page sections: how it works, security, app showcase
+// Mid-page sections: stats, how it works, security, app showcase, IRA, testimonials, FAQ
+export function CountTo({ target, inView, duration = 1400 }) {
+  const [val, setVal] = React.useState(0);
+  React.useEffect(() => {
+    if (!inView) return;
+    let raf, start;
+    const tick = (t) => {
+      if (!start) start = t;
+      const p = Math.min(1, (t - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(target * eased);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, target]);
+  if (target >= 1000) return val.toLocaleString(undefined, { maximumFractionDigits: 0 });
+  if (target < 10) return val.toFixed(1);
+  return Math.round(val).toString();
+}
 
 export function HowItWorks() {
   const steps = [
-    { n: '01', t: 'Sign up in 60 seconds', d: 'Just your phone number to start. PAN/DigiLocker KYC takes another two minutes — required before your first buy.', icon: 'id' },
-    { n: '02', t: 'Buy with UPI', d: 'From ₹100. Pay over UPI; we settle your purchase in Tether Gold (XAUT) — each token backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. Your balance shows in grams.', icon: 'buy' },
+    { n: '01', t: 'Sign up in 60 seconds', d: 'Just your phone number to start. PAN/DigiLocker KYC takes another two minutes, and is required before your first buy.', icon: 'id' },
+    { n: '02', t: 'Buy with UPI', d: 'From ₹100. Pay over UPI; we settle your purchase in Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. Your balance shows in grams.', icon: 'buy' },
     { n: '03', t: 'Sell, gift, or redeem', d: 'Sell back to your bank in 15 minutes. Send grams to anyone via a link. Redeem 24K coins or jewellery once you cross 1 tola.', icon: 'send' },
   ];
   return (
@@ -70,14 +89,14 @@ export function SecuritySection() {
             <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20 }}>Custody & insurance</div></Reveal>
             <Reveal delay={80}><h2 className="gf-h2" style={{ marginBottom: 24 }}>Real gold,<br /><em>verifiable on-chain.</em></h2></Reveal>
             <Reveal delay={160}><p className="gf-lede" style={{ marginBottom: 36 }}>
-              We don't hold the gold ourselves. Every gram you buy is settled into Tether Gold (XAUT) — a token where each unit is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether's London custodian. You see grams in the app; ownership lives on Ethereum, with every transaction publicly verifiable.
+              We don't hold the gold ourselves. Every gram you buy is settled into Tether Gold (XAUT), a token where each unit is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether's London custodian. You see grams in the app; ownership lives on Ethereum, with every transaction publicly verifiable.
             </p></Reveal>
             <div style={{ display: 'grid', gap: 0 }}>
               {[
                 ['Backed 1:1 by Tether Gold (XAUT)', '1 XAUT = 1 troy ounce of LBMA Good Delivery 24K bullion held by Tether’s London custodian. Your balance shows in grams.'],
                 ['On-chain verifiable, 24/7', 'Your XAUT balance is visible on Ethereum at any time. Every transaction comes with a block-explorer link you can audit yourself.'],
                 ['Independent reserve attestations', 'Tether publishes periodic attestations of the physical bullion backing XAUT, prepared by a third-party attestation firm. Reports are publicly available.'],
-                ['ISO 27001-aligned + DigiLocker KYC', 'Encryption at rest and in transit. We hold no card or UPI credentials — those stay with your bank.'],
+                ['ISO 27001-aligned + DigiLocker KYC', 'Encryption at rest and in transit. We hold no card or UPI credentials; those stay with your bank.'],
               ].map(([t, d], i) => (
                 <Reveal key={t} delay={200 + i * 80}>
                   <div style={{ display: 'flex', gap: 14, padding: '18px 0', borderTop: i === 0 ? 'none' : '1px solid var(--border)' }}>
@@ -239,7 +258,7 @@ export function AppShowcase() {
         <div style={{ textAlign: 'center', marginBottom: 80 }}>
           <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20, justifyContent: 'center' }}>The app</div></Reveal>
           <Reveal delay={80}><h2 className="gf-h2" style={{ maxWidth: 800, margin: '0 auto 20px' }}>Buy. Save. Sell. <em>Gift.</em><br />All from your pocket.</h2></Reveal>
-          <Reveal delay={160}><p className="gf-lede" style={{ margin: '0 auto', textAlign: 'center' }}>Designed by people who use it daily — to set up a daily SIP, round up UPI payments, or send a gram of gold for a wedding or birthday.</p></Reveal>
+          <Reveal delay={160}><p className="gf-lede" style={{ margin: '0 auto', textAlign: 'center' }}>Designed by people who use it daily: to set up a daily SIP, round up UPI payments, or send a gram of gold for a wedding or birthday.</p></Reveal>
         </div>
         <div style={{ display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'flex-end' }}>
           <Reveal delay={100}><AppMockup kind="home" tag="Home" /></Reveal>
@@ -259,16 +278,16 @@ export function AppShowcase() {
 
 export function AppMockup({ kind, tag, highlight }) {
   const data = React.useMemo(() => genPriceData(40, 2380, 18), []);
-  const { delta } = useLivePrice(2384.50);
+  const { val, delta } = useLivePrice(2384.50);
   return (
     <div style={{ position: 'relative' }}>
       {highlight && (
         <div style={{ position: 'absolute', inset: -20, background: 'radial-gradient(50% 60% at 50% 60%, rgba(245,184,50,0.25) 0%, transparent 70%)', filter: 'blur(20px)', borderRadius: 60, pointerEvents: 'none' }} />
       )}
       <PhoneMini scale={0.9}>
-        {kind === 'home' && <AppHome data={data} />}
-        {kind === 'buy' && <AppBuy />}
-        {kind === 'chart' && <AppChart delta={delta} data={data} />}
+        {kind === 'home' && <AppHome val={val} delta={delta} data={data} />}
+        {kind === 'buy' && <AppBuy val={val} />}
+        {kind === 'chart' && <AppChart val={val} delta={delta} data={data} />}
       </PhoneMini>
       <div style={{ textAlign: 'center', marginTop: 16 }}>
         <span className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>{tag}</span>
@@ -277,7 +296,7 @@ export function AppMockup({ kind, tag, highlight }) {
   );
 }
 
-export function AppHome({ data }) {
+export function AppHome({ val, delta, data }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
@@ -311,7 +330,7 @@ export function AppHome({ data }) {
   );
 }
 
-export function AppBuy() {
+export function AppBuy({ val }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>← Buy gold</div>
@@ -341,7 +360,7 @@ export function AppBuy() {
   );
 }
 
-export function AppChart({ delta, data }) {
+export function AppChart({ val, delta, data }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 14 }}>← Live · 24K Gold / INR</div>

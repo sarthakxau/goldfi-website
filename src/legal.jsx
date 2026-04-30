@@ -17,7 +17,7 @@ function LegalShell({ kind, title, children }) {
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 1.05, margin: '0 0 12px' }}>
           {title}
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 8 }}>goldfi platform — India</p>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 8 }}>goldfi platform, India</p>
         <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', marginBottom: 56 }}>
           Effective Date: 30 April 2026 &nbsp;·&nbsp; Last Updated: April 2026
         </p>

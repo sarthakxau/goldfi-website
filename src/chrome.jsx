@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
-// Site chrome — top nav + footer + price marquee strip
+// Site chrome: top nav + footer + price marquee strip
 
 export function ThemeSwitcher() {
   const themes = [
@@ -137,7 +137,7 @@ export function Footer() {
               <a href="/"><img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} /></a>
             </div>
             <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 280 }}>
-              Save into 24K gold, on your phone. Buy from ₹100 with UPI — settled into Tether Gold (XAUT), where 1 token = 1 troy ounce of LBMA Good Delivery bullion.
+              Save into 24K gold, on your phone. Buy from ₹100 with UPI, settled into Tether Gold (XAUT), where 1 token = 1 troy ounce of LBMA Good Delivery bullion.
             </p>
             <div style={{ marginTop: 24 }}>
               <a href="/#waitlist" className="gf-cta" style={{ padding: '10px 18px', fontSize: 13 }}>

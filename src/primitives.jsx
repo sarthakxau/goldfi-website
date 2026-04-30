@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Shared visual primitives — gold bar SVG, live ticker, sparkline, etc.
+// Shared visual primitives: gold bar SVG, live ticker, sparkline, etc.
 
 export function GoldBarSVG({ size = 1, style = {} }) {
   const w = 280 * size, h = 180 * size;
@@ -58,7 +58,7 @@ export function GoldCoinSVG({ size = 120, style = {} }) {
   );
 }
 
-// Live price ticker — generates a small smooth random walk around base
+// Live price ticker: generates a small smooth random walk around base
 export function useLivePrice(base = 2384.50, drift = 0.0003) {
   const [val, setVal] = React.useState(base);
   const [delta, setDelta] = React.useState(0);
@@ -106,7 +106,7 @@ export function genPriceData(n = 80, base = 2380, vol = 18) {
   return out;
 }
 
-// Auto-counter — counts up to value once on mount/in-view
+// Auto-counter: counts up to value once on mount/in-view
 function useCountUp(target, duration = 1600) {
   const [val, setVal] = React.useState(0);
   React.useEffect(() => {

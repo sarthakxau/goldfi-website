@@ -342,7 +342,7 @@
 }
 
 
-/* Gold.Fi design tokens — extends the in-app system for marketing/landing */
+/* Gold.Fi design tokens: extends the in-app system for marketing/landing */
 
 :root, html[data-theme='noir'] {
   --bg-primary: #0B0B0B;

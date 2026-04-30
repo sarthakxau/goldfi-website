@@ -3,17 +3,17 @@ import { ArrowRight } from 'lucide-react';
 import { Sparkline, Reveal, useLivePrice, genPriceData } from './primitives';
 
 // 3 hero variants for Gold.Fi landing
-// Variant A: Editorial — big serif, asymmetric, vault photograph placeholder
-// Variant B: Live ticker — split layout, animated chart + price as centerpiece
-// Variant C: 3D bar — centered, dramatic gold bar floating over grid
+// Variant A: Editorial - big serif, asymmetric, vault photograph placeholder
+// Variant B: Live ticker - split layout, animated chart + price as centerpiece
+// Variant C: 3D bar - centered, dramatic gold bar floating over grid
 
-// ============== HERO A — EDITORIAL =================
+// ============== HERO A - EDITORIAL =================
 export function HeroEditorial({ onLaunch }) {
   return (
     <section style={{ position: 'relative', minHeight: '92vh', overflow: 'hidden', background: 'var(--bg-primary)' }} className="gf-grain">
       <div className="gf-grid-bg" />
       <div className="gf-guilloche" />
-      {/* Decorative numerals — banknote serial number */}
+      {/* Decorative numerals: banknote serial number */}
       <div style={{ position: 'absolute', top: 96, right: 32, fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--text-tertiary)', textAlign: 'right', lineHeight: 1.7 }}>
         SERIAL · GF–204871–24K<br />
         ASSAY · 999.9 FINE · 24K<br />
@@ -22,7 +22,7 @@ export function HeroEditorial({ onLaunch }) {
 
       <div className="gf-container" style={{ position: 'relative', paddingTop: 96, paddingBottom: 72 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 64, alignItems: 'end', minHeight: '70vh' }}>
-          {/* LEFT — type */}
+          {/* LEFT: type */}
           <div>
             <Reveal>
               <div className="gf-eyebrow" style={{ marginBottom: 32 }}>Pre-launch · Closed beta · Backed by Tether Gold</div>
@@ -36,7 +36,7 @@ export function HeroEditorial({ onLaunch }) {
             </Reveal>
             <Reveal delay={220}>
               <p className="gf-lede" style={{ marginBottom: 36, maxWidth: 480 }}>
-                A SIP for gold. Save ₹100 at a time over UPI — settled into Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether's London custodian. Your balance shows in grams. Sell back to your bank, gift grams to friends, or redeem as a physical coin.
+                A SIP for gold. Save ₹100 at a time over UPI, settled into Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion held by Tether's London custodian. Your balance shows in grams. Sell back to your bank, gift grams to friends, or redeem as a physical coin.
               </p>
             </Reveal>
             <Reveal delay={320}>
@@ -54,7 +54,7 @@ export function HeroEditorial({ onLaunch }) {
             </Reveal>
           </div>
 
-          {/* RIGHT — large gold bar plate */}
+          {/* RIGHT: large gold bar plate */}
           <div style={{ position: 'relative', alignSelf: 'stretch', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Reveal delay={300}>
               <HeroVaultPlate />
@@ -166,7 +166,7 @@ export function HeroProof() {
   );
 }
 
-// ============== HERO B — LIVE TICKER ===============
+// ============== HERO B - LIVE TICKER ===============
 export function HeroTicker({ onLaunch }) {
   const data = React.useMemo(() => genPriceData(120, 2380, 22), []);
   const { val, delta } = useLivePrice(2384.50);
@@ -182,13 +182,13 @@ export function HeroTicker({ onLaunch }) {
             <Reveal delay={100}>
               <h1 className="gf-h1" style={{ marginBottom: 28 }}>
                 The 5,000-year<br />
-                hedge — now<br />
+                hedge, now<br />
                 <em>tappable.</em>
               </h1>
             </Reveal>
             <Reveal delay={200}>
               <p className="gf-lede" style={{ marginBottom: 32, maxWidth: 520 }}>
-                A SIP for gold. ₹100 at a time, settled into Tether Gold (XAUT) — each token backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. Buy via UPI, sell back to your bank, set up autopay, or send grams as a gift — all without ever touching a wallet, address, or token name.
+                A SIP for gold. ₹100 at a time, settled into Tether Gold (XAUT), with each token backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. Buy via UPI, sell back to your bank, set up autopay, or send grams as a gift, all without ever touching a wallet, address, or token name.
               </p>
             </Reveal>
             <Reveal delay={300}>
@@ -298,7 +298,7 @@ export function BuyCalculator({ onLaunch }) {
   );
 }
 
-// ============== HERO C — DRAMATIC =================
+// ============== HERO C - DRAMATIC =================
 export function HeroDramatic({ onLaunch }) {
   const { val } = useLivePrice(2384.50);
   return (
