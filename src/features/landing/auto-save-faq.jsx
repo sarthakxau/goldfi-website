@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkline, Reveal } from './primitives';
+import { Sparkline, Reveal } from '../../components/primitives';
 
 // Remaining sections: Auto-Save, FAQ
 
@@ -45,7 +45,7 @@ Set up UPI Autopay once. Save ₹100 a week, ₹500 a month, or whatever fits yo
   );
 }
 
-export function AutoSaveCard() {
+function AutoSaveCard() {
   // Daily SIP projection ~ ₹100/day, 10 years
   const points = React.useMemo(
     () => Array.from({ length: 30 }, (_, i) => 50 + i * 8 + Math.pow(i, 1.55) * 1.4),
@@ -66,7 +66,7 @@ export function AutoSaveCard() {
 
         {/* Sparkline */}
         <div style={{ position: 'relative', height: 130, marginBottom: 18 }}>
-          <Sparkline data={points} width={520} height={130} axis />
+          <Sparkline data={points} width={520} height={130} />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 16, paddingTop: 18, borderTop: '1px solid var(--border)' }}>
@@ -120,7 +120,7 @@ export function FAQ() {
         </div>
         <div>
           {items.map(([q, a], i) => (
-            <Reveal key={i} delay={i * 50}>
+            <Reveal key={q} delay={i * 50}>
               <div style={{ borderTop: i === 0 ? '1px solid var(--border)' : 'none', borderBottom: '1px solid var(--border)' }}>
                 <button onClick={() => setOpen(open === i ? -1 : i)} style={{
                   width: '100%', padding: '24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24,
@@ -140,4 +140,3 @@ export function FAQ() {
     </section>
   );
 }
-

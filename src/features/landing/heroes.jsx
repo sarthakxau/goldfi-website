@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Sparkline, Reveal, useLivePrice, genPriceData } from './primitives';
+import { Sparkline, Reveal, useLivePrice, genPriceData } from '../../components/primitives';
 
 // 3 hero variants for Gold.Fi landing
 // Variant A: Editorial - big serif, asymmetric, vault photograph placeholder
@@ -60,7 +60,7 @@ export function HeroEditorial({ onLaunch }) {
   );
 }
 
-export function HeroVaultPlate() {
+function HeroVaultPlate() {
   const data = React.useMemo(() => genPriceData(60, 2380, 16), []);
   const { val, delta } = useLivePrice(2384.50);
   return (
@@ -129,7 +129,7 @@ export function HeroVaultPlate() {
   );
 }
 
-export function HeroProof() {
+function HeroProof() {
   return (
     <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
       {[
@@ -185,7 +185,7 @@ export function HeroTicker({ onLaunch }) {
   );
 }
 
-export function HeroChartCard({ data, val, delta }) {
+function HeroChartCard({ data, val, delta }) {
   const inrPerGram = 7700 + val * 0.005;
   const inrDelta = delta * 3;
   return (
@@ -236,7 +236,7 @@ export function HeroChartCard({ data, val, delta }) {
   );
 }
 
-export function BuyCalculator({ onLaunch }) {
+function BuyCalculator({ onLaunch }) {
   const [inr, setInr] = React.useState(500);
   const grams = (inr / 7712).toFixed(4);
   return (

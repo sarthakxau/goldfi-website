@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check } from 'lucide-react';
-import { Reveal } from './primitives';
+import { Reveal } from '../../components/primitives';
 
 // Waitlist section: pre-launch capture form
 

@@ -1,4 +1,4 @@
-import { LegalShell, H2, P, Strong, Callout, Table } from './legal';
+import { LegalShell, H2, P, Strong, Callout, Table } from './components';
 
 export default function PrivacyPage() {
   return (

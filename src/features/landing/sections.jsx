@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserCheck, Wallet, Send, Check, ArrowRight } from 'lucide-react';
-import { Sparkline, Reveal, PhoneMini, useLivePrice, genPriceData } from './primitives';
+import { Sparkline, Reveal, PhoneMini, useLivePrice, genPriceData } from '../../components/primitives';
 
 // Mid-page sections: how it works, security, app showcase
 
@@ -49,7 +49,7 @@ export function HowItWorks() {
   );
 }
 
-export function StepIcon({ kind }) {
+function StepIcon({ kind }) {
   const props = { size: 32, color: 'var(--gold-bright)', strokeWidth: 1.4, absoluteStrokeWidth: true };
   if (kind === 'id') return <UserCheck {...props} />;
   if (kind === 'buy') return <Wallet {...props} />;
@@ -99,7 +99,7 @@ export function SecuritySection() {
   );
 }
 
-export function VaultDiagram() {
+function VaultDiagram() {
   const nodes = [
     { label: 'BACKED · XAUT',     sub: 'Tether Gold · 1:1',    start: -70,  dur: 14 },
     { label: 'CHAIN · ETHEREUM',  sub: 'On-chain auditable',    start:  20,  dur: 18 },
@@ -257,7 +257,7 @@ export function AppShowcase() {
   );
 }
 
-export function AppMockup({ kind, tag, highlight }) {
+function AppMockup({ kind, tag, highlight }) {
   const data = React.useMemo(() => genPriceData(40, 2380, 18), []);
   const { delta } = useLivePrice(2384.50);
   return (
@@ -277,7 +277,7 @@ export function AppMockup({ kind, tag, highlight }) {
   );
 }
 
-export function AppHome({ data }) {
+function AppHome({ data }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
@@ -311,7 +311,7 @@ export function AppHome({ data }) {
   );
 }
 
-export function AppBuy() {
+function AppBuy() {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>← Buy gold</div>
@@ -341,7 +341,7 @@ export function AppBuy() {
   );
 }
 
-export function AppChart({ delta, data }) {
+function AppChart({ delta, data }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 14 }}>← Live · 24K Gold / INR</div>

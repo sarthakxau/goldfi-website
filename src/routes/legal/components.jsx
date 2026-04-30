@@ -69,10 +69,10 @@ const Table = ({ headers, rows }) => (
         </tr>
       </thead>
       <tbody>
-        {rows.map((row, i) => (
-          <tr key={i}>
+        {rows.map((row) => (
+          <tr key={row[0]}>
             {row.map((cell, j) => (
-              <td key={j} style={{ padding: '10px 12px', borderBottom: '1px solid var(--border-subtle)', verticalAlign: 'top', color: j === 0 ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{cell}</td>
+              <td key={cell} style={{ padding: '10px 12px', borderBottom: '1px solid var(--border-subtle)', verticalAlign: 'top', color: j === 0 ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{cell}</td>
             ))}
           </tr>
         ))}

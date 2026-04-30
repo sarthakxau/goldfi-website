@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 // Site chrome: top nav + footer + price marquee strip
 
-export function ThemeSwitcher() {
+function ThemeSwitcher() {
   const themes = [
     { id: 'noir', label: 'Noir' },
     { id: 'ivory', label: 'Ivory' },
@@ -59,7 +59,7 @@ export function TopNav({ onLaunch }) {
       backdropFilter: scrolled ? 'blur(16px) saturate(140%)' : 'none',
       WebkitBackdropFilter: scrolled ? 'blur(16px) saturate(140%)' : 'none',
       borderBottom: scrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
-      transition: 'all 240ms var(--ease-out)',
+      transition: 'background 240ms var(--ease-out), border-color 240ms var(--ease-out), backdrop-filter 240ms var(--ease-out)',
     }}>
       <div className="gf-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>

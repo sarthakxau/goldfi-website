@@ -1,11 +1,5 @@
 # Gold.Fi — Landing Page
 
-## Stack
-
-- **Vite** — dev server & production bundler
-- **React 18** — UI components
-- **CSS** — design tokens in `src/styles.css`, no Tailwind/CSS-in-JS
-
 ## Getting started
 
 ```bash
@@ -26,15 +20,19 @@ npm run preview  # serve dist/ at http://localhost:4173
 │   ├── logo.svg            → /logo.svg
 │   └── fonts/              → /fonts/*.woff2  (DM Sans, Fraunces, JetBrains Mono)
 └── src/
-    ├── main.jsx            App entry — mounts <Landing /> into #root
+    ├── main.jsx            Vite entry — mounts <App /> into #root
+    ├── app/
+    │   └── App.jsx         App shell, landing composition, legal route switch
     ├── styles.css          Design tokens, @font-face, layout utilities
-    ├── primitives.jsx      GoldBarSVG, Sparkline, Reveal, PhoneMini …
-    ├── chrome.jsx          TopNav, PriceStrip, Footer, ThemeSwitcher
-    ├── heroes.jsx          HeroEditorial, HeroTicker, HeroDramatic
-    ├── sections.jsx        HowItWorks, SecuritySection, AppShowcase, …
-    ├── sections2.jsx       AutoSave, FAQ, Testimonials, FinalCTA
-    ├── waitlist.jsx        Waitlist form
-    └── tweaks-panel.jsx    On-page design tweaks panel
+    ├── components/
+    │   ├── chrome.jsx      TopNav, PriceStrip, Footer
+    │   ├── primitives.jsx  Sparkline, Reveal, PhoneMini, live price helper
+    │   └── tweaks-panel.jsx
+    ├── features/
+    │   ├── landing/        Hero variants and landing-page sections
+    │   └── waitlist/       Waitlist form
+    └── routes/
+        └── legal/          Terms and privacy pages
 ```
 
 ## Theming
