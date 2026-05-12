@@ -226,9 +226,9 @@ export function AppShowcase() {
           <Reveal delay={160}><p className="gf-lede" style={{ margin: '0 auto', textAlign: 'center' }}>Designed by people who use it daily: to set up a daily SIP, round up UPI payments, or send a gram of gold for a wedding or birthday.</p></Reveal>
         </div>
         <div className="gf-phone-scroller">
-          <AppMockup kind="home" tag="Home" />
-          <div className="gf-app-mockup-raise"><AppMockup kind="buy" tag="Buy" highlight /></div>
-          <AppMockup kind="chart" tag="Live charts" />
+          <Reveal delay={100}><AppMockup kind="home" tag="Home" /></Reveal>
+          <Reveal delay={200} className="gf-app-mockup-raise"><AppMockup kind="buy" tag="Buy" highlight /></Reveal>
+          <Reveal delay={300}><AppMockup kind="chart" tag="Live charts" /></Reveal>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
           <a href="#waitlist" className="gf-cta" style={{ padding: '14px 26px' }}>
