@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
+import { useGoldPrice, fmtINR } from './primitives';
 
 // Site chrome: top nav + footer + price marquee strip
 
@@ -171,13 +172,16 @@ export function TopNav({ onLaunch }) {
 }
 
 export function PriceStrip() {
+  const g = useGoldPrice();
+  const goldUp = g.changePct >= 0;
+  const goldDelta = `${goldUp ? '+' : '−'}${Math.abs(g.changePct).toFixed(2)}%`;
   const items = [
-    { label: '24K Gold',      val: '₹7,712 / g',   d: '+0.42%', up: true },
-    { label: '22K Gold',      val: '₹7,068 / g',   d: '+0.41%', up: true },
+    { label: '24K Gold',      val: `₹${fmtINR(g.perGram24k, 0)} / g`, d: goldDelta, up: goldUp },
+    { label: '22K Gold',      val: `₹${fmtINR(g.perGram22k, 0)} / g`, d: goldDelta, up: goldUp },
     { label: 'Silver',        val: '₹93.20 / g',   d: '−0.18%', up: false },
-    { label: 'USD / INR',     val: '₹83.42',       d: '+0.07%', up: true },
+    { label: 'USD / INR',     val: `₹${fmtINR(g.usdInr, 2)}`,         d: '',       up: true },
     { label: 'Sensex',        val: '78,420',         d: '+0.31%', up: true },
-    { label: 'BTC / 10g',     val: '0.0036 BTC',     d: '+0.04', up: true },
+    { label: 'BTC / 10g',     val: `${g.btcPer10g.toFixed(4)} BTC`,   d: '',       up: true },
     { label: 'Vault total',   val: '2,400 kg',       d: 'live',  up: true },
   ];
   const row = (

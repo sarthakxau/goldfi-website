@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkline, Reveal, useInView } from '../../components/primitives';
+import { Sparkline, Reveal, useInView, useGoldPrice } from '../../components/primitives';
 
 // Remaining sections: Auto-Save, FAQ
 
@@ -74,6 +74,8 @@ function AutoSaveCard() {
     () => Array.from({ length: 30 }, (_, i) => 50 + i * 8 + Math.pow(i, 1.55) * 1.4),
     []
   );
+  const g = useGoldPrice();
+  const dailyGrams = 100 / g.perGram24k; // grams a ₹100 daily SIP buys at today's price
   const [cardRef, seen] = useInView({ threshold: 0.25 });
   const projected = useCountUp(684290, 1800, seen);
   const gain = useCountUp(319290, 1800, seen);
@@ -85,7 +87,7 @@ function AutoSaveCard() {
           <div>
             <div className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>Daily SIP · UPI Autopay</div>
             <div className="font-display" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 7vw, 36px)', fontWeight: 400, letterSpacing: '-0.02em', marginTop: 6 }}>₹100 / day</div>
-            <div style={{ fontSize: 12.5, color: 'var(--success)', fontFamily: 'var(--font-mono)' }}>▲ 0.084 g credited today · 5:31 AM</div>
+            <div style={{ fontSize: 12.5, color: 'var(--success)', fontFamily: 'var(--font-mono)' }}>▲ {dailyGrams.toFixed(4)} g credited today · 5:31 AM</div>
           </div>
           <img src="/xaut-icon.svg" alt="Tether Gold (XAUT)" style={{ width: 48, height: 48, flexShrink: 0, objectFit: 'contain', display: 'block' }} />
         </div>
@@ -107,15 +109,15 @@ function AutoSaveCard() {
 
         <div className="gf-autosave-log" style={{ marginTop: 18, display: 'grid', gap: 1, background: 'var(--border-subtle)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
           {[
-            ['MON · 14 OCT', '₹100', '0.084 g', 'UPI · HDFC'],
-            ['SUN · 13 OCT', '₹100', '0.085 g', 'UPI · HDFC'],
-            ['SAT · 12 OCT', '₹100', '0.083 g', 'UPI · HDFC'],
-          ].map(([d, amt, g, src]) => (
+            ['MON · 14 OCT', 1.000],
+            ['SUN · 13 OCT', 1.012],
+            ['SAT · 12 OCT', 0.991],
+          ].map(([d, mult]) => (
             <div key={d} className="gf-autosave-log-row" style={{ background: 'var(--surface-elevated)', display: 'grid', gap: 10, padding: '10px 14px', fontSize: 12, alignItems: 'center' }}>
               <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-tertiary)', fontSize: 11 }}>{d}</span>
-              <span style={{ fontWeight: 600 }}>{amt}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--gold-bright)' }}>{g}</span>
-              <span className="gf-autosave-log-src" style={{ textAlign: 'right', fontSize: 11, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{src}</span>
+              <span style={{ fontWeight: 600 }}>₹100</span>
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--gold-bright)' }}>{(dailyGrams * mult).toFixed(4)} g</span>
+              <span className="gf-autosave-log-src" style={{ textAlign: 'right', fontSize: 11, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>UPI · HDFC</span>
             </div>
           ))}
         </div>

@@ -4,22 +4,120 @@ import React from 'react';
 
 const EMPTY_STYLE = Object.freeze({});
 
-// Live price ticker: generates a small smooth random walk around base
-export function useLivePrice(base = 2384.50) {
-  const [val, setVal] = React.useState(base);
-  const [delta, setDelta] = React.useState(0);
+// Live gold price (Tether Gold / XAUT, via CoinGecko)
+const TROY_OUNCE_G = 31.1034768;
+const COINGECKO = 'https://api.coingecko.com/api/v3';
+const COINGECKO_DEMO_KEY = import.meta.env.VITE_COINGECKO_API_KEY;
+const COINGECKO_HEADERS = COINGECKO_DEMO_KEY ? { 'x-cg-demo-api-key': COINGECKO_DEMO_KEY } : undefined;
+
+// FALLBACK VALUES
+const FALLBACK_XAUT_USD = 4612;
+const FALLBACK_USD_INR = 86;
+const FALLBACK_BTC_USD = 95000;
+
+function deriveGoldQuote({ xautUsd, xautInr, btcUsd, changePct }) {
+  const pct = Number.isFinite(changePct) ? changePct : 0;
+  const perGram24k = xautInr / TROY_OUNCE_G;
+  const prev24k = perGram24k / (1 + pct / 100);
+  return {
+    xautUsd,
+    xautInr,
+    perGram24k,
+    perGram22k: perGram24k * (22 / 24),
+    usdInr: xautInr / xautUsd,
+    changePct: pct,
+    changeInr: perGram24k - prev24k,
+    btcPer10g: btcUsd ? ((xautUsd / TROY_OUNCE_G) * 10) / btcUsd : 0,
+  };
+}
+
+const FALLBACK_GOLD_QUOTE = deriveGoldQuote({
+  xautUsd: FALLBACK_XAUT_USD,
+  xautInr: FALLBACK_XAUT_USD * FALLBACK_USD_INR,
+  btcUsd: FALLBACK_BTC_USD,
+  changePct: 0,
+});
+
+// Gentle wander around a centre price — keeps sparklines from rendering empty
+// before live history arrives, or if the history call fails.
+function syntheticSeries(centre, n = 48) {
+  const out = [];
+  let v = centre * 0.997;
+  for (let i = 0; i < n; i++) {
+    v += (Math.random() - 0.45) * centre * 0.0014;
+    out.push(v);
+  }
+  out.push(centre);
+  return out;
+}
+
+let goldStore = {
+  ...FALLBACK_GOLD_QUOTE,
+  series: syntheticSeries(FALLBACK_GOLD_QUOTE.perGram24k),
+  live: false,
+  loading: true,
+};
+const goldSubs = new Set();
+let goldTimer = null;
+
+function publishGold(next) {
+  goldStore = next;
+  goldSubs.forEach((fn) => fn(goldStore));
+}
+
+async function refreshGold() {
+  try {
+    const [spotRes, histRes] = await Promise.all([
+      fetch(`${COINGECKO}/simple/price?ids=tether-gold,bitcoin&vs_currencies=usd,inr&include_24hr_change=true`, { headers: COINGECKO_HEADERS }),
+      fetch(`${COINGECKO}/coins/tether-gold/market_chart?vs_currency=inr&days=1`, { headers: COINGECKO_HEADERS }),
+    ]);
+    if (!spotRes.ok || !histRes.ok) throw new Error('coingecko request failed');
+    const spot = await spotRes.json();
+    const hist = await histRes.json();
+    const g = spot && spot['tether-gold'];
+    if (!g || typeof g.inr !== 'number' || typeof g.usd !== 'number') throw new Error('unexpected payload');
+    const quote = deriveGoldQuote({
+      xautUsd: g.usd,
+      xautInr: g.inr,
+      btcUsd: spot.bitcoin && spot.bitcoin.usd,
+      changePct: g.inr_24h_change,
+    });
+    const series = Array.isArray(hist.prices) && hist.prices.length
+      ? hist.prices.map((p) => p[1] / TROY_OUNCE_G)
+      : syntheticSeries(quote.perGram24k);
+    publishGold({ ...quote, series, live: true, loading: false });
+  } catch (e) {
+    // Keep the last good (or fallback) numbers — just clear the loading flag.
+    publishGold({ ...goldStore, loading: false });
+  }
+}
+
+function startGoldPolling() {
+  if (goldTimer) return;
+  refreshGold();
+  goldTimer = setInterval(refreshGold, 60000);
+}
+
+// Live 24K / 22K gold quote in INR, plus the implied USD/INR rate, BTC-per-10g,
+// 24h change, and an intraday ₹/gram series for sparklines.
+export function useGoldPrice() {
+  const [snapshot, setSnapshot] = React.useState(goldStore);
   React.useEffect(() => {
-    let last = base;
-    const id = setInterval(() => {
-      const noise = (Math.random() - 0.48) * 0.8;
-      const next = +(last + noise).toFixed(2);
-      setVal(next);
-      setDelta(+(next - last).toFixed(2));
-      last = next;
-    }, 1800);
-    return () => clearInterval(id);
+    goldSubs.add(setSnapshot);
+    setSnapshot(goldStore);
+    startGoldPolling();
+    return () => {
+      goldSubs.delete(setSnapshot);
+      if (goldSubs.size === 0 && goldTimer) { clearInterval(goldTimer); goldTimer = null; }
+    };
   }, []);
-  return { val, delta };
+  return snapshot;
+}
+
+// Indian-grouped number, no currency symbol.
+export function fmtINR(n, decimals = 0) {
+  if (!Number.isFinite(n)) return '0';
+  return Number(n).toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 }
 
 // Mini sparkline path. Pass fluid to make the SVG fill its parent's width.
@@ -54,17 +152,6 @@ export function Sparkline({ data, width = 200, height = 50, fluid = false, drawn
       />
     </svg>
   );
-}
-
-// Generates synthetic price-history data
-export function genPriceData(n = 80, base = 2380, vol = 18) {
-  const out = [];
-  let v = base - vol;
-  for (let i = 0; i < n; i++) {
-    v += (Math.random() - 0.45) * vol * 0.4;
-    out.push(v);
-  }
-  return out;
 }
 
 // Hook: in-view trigger (fires once, then disconnects)

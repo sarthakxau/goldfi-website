@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserCheck, Wallet, Send, Check, ArrowRight } from 'lucide-react';
-import { Sparkline, Reveal, PhoneMini, useLivePrice, genPriceData } from '../../components/primitives';
+import { Sparkline, Reveal, PhoneMini, useGoldPrice, fmtINR } from '../../components/primitives';
 
 // Mid-page sections: how it works, security, app showcase
 
@@ -242,17 +242,16 @@ export function AppShowcase() {
 }
 
 function AppMockup({ kind, tag, highlight }) {
-  const data = React.useMemo(() => genPriceData(40, 2380, 18), []);
-  const { delta } = useLivePrice(2384.50);
+  const g = useGoldPrice();
   return (
     <div style={{ position: 'relative' }}>
       {highlight && (
         <div style={{ position: 'absolute', inset: -20, background: 'radial-gradient(50% 60% at 50% 60%, rgba(245,184,50,0.25) 0%, transparent 70%)', filter: 'blur(20px)', borderRadius: 60, pointerEvents: 'none' }} />
       )}
       <PhoneMini scale={0.9}>
-        {kind === 'home' && <AppHome data={data} />}
-        {kind === 'buy' && <AppBuy />}
-        {kind === 'chart' && <AppChart delta={delta} data={data} />}
+        {kind === 'home' && <AppHome g={g} />}
+        {kind === 'buy' && <AppBuy g={g} />}
+        {kind === 'chart' && <AppChart g={g} />}
       </PhoneMini>
       <div style={{ textAlign: 'center', marginTop: 16 }}>
         <span className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>{tag}</span>
@@ -261,7 +260,8 @@ function AppMockup({ kind, tag, highlight }) {
   );
 }
 
-function AppHome({ data }) {
+function AppHome({ g }) {
+  const up = g.changeInr >= 0;
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
@@ -274,7 +274,7 @@ function AppHome({ data }) {
         <div style={{ fontSize: 11, color: 'var(--success)' }}>▲ ₹128 · 1.04% · 1.62 g</div>
       </div>
       <div style={{ background: 'var(--surface)', borderRadius: 12, padding: 12, border: '1px solid var(--border)', marginBottom: 12 }}>
-        <Sparkline data={data} height={56} fluid />
+        <Sparkline data={g.series} height={56} fluid />
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', marginTop: 6 }}>
           <span>1D</span><span>1W</span><span>1M</span><span style={{ color: 'var(--gold-bright)' }}>1Y</span><span>ALL</span>
         </div>
@@ -285,24 +285,24 @@ function AppHome({ data }) {
       </div>
       <div style={{ background: 'var(--surface)', borderRadius: 10, padding: 10, fontSize: 11, marginBottom: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-          <span>24K Gold · 1g</span><span style={{ color: 'var(--success)' }}>₹7,712</span>
+          <span>24K Gold · 1g</span><span style={{ color: up ? 'var(--success)' : 'var(--error)' }}>₹{fmtINR(g.perGram24k, 0)}</span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'var(--text-muted)' }}>
-          <span>Updated 2s ago</span><span>+₹12</span>
+          <span>Updated just now</span><span>{up ? '+' : '−'}₹{fmtINR(Math.abs(g.changeInr), 0)}</span>
         </div>
       </div>
     </div>
   );
 }
 
-function AppBuy() {
+function AppBuy({ g }) {
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>← Buy gold</div>
       <div style={{ marginTop: 18, marginBottom: 22 }}>
         <div style={{ fontSize: 10, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.2em', fontFamily: 'var(--font-mono)' }}>Amount</div>
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 56, fontWeight: 300, letterSpacing: '-0.03em' }}>₹500</div>
-        <div style={{ fontSize: 11, color: 'var(--text-secondary)' }}>≈ 0.0648 g · ₹7,712 / g</div>
+        <div style={{ fontSize: 11, color: 'var(--text-secondary)' }}>≈ {(500 / g.perGram24k).toFixed(4)} g · ₹{fmtINR(g.perGram24k, 0)} / g</div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6, marginBottom: 16 }}>
         {['₹100', '₹500', '₹1K'].map((c) => (
@@ -325,29 +325,33 @@ function AppBuy() {
   );
 }
 
-function AppChart({ delta, data }) {
+function AppChart({ g }) {
+  const up = g.changeInr >= 0;
+  const open = g.series.length ? g.series[0] : g.perGram24k;
+  const high = g.series.length ? Math.max(...g.series) : g.perGram24k;
+  const low = g.series.length ? Math.min(...g.series) : g.perGram24k;
   return (
     <div style={{ background: 'var(--bg-primary)', height: '100%', padding: '50px 18px 18px' }}>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 14 }}>← Live · 24K Gold / INR</div>
-      <div style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 300, letterSpacing: '-0.03em' }}>₹7,712 / g</div>
-      <div style={{ fontSize: 11, color: delta >= 0 ? 'var(--success)' : 'var(--error)', marginBottom: 20, fontFamily: 'var(--font-mono)' }}>
-        {delta >= 0 ? '▲' : '▼'} ₹{Math.abs(delta * 3).toFixed(0)} · 24h
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 300, letterSpacing: '-0.03em' }}>₹{fmtINR(g.perGram24k, 0)} / g</div>
+      <div style={{ fontSize: 11, color: up ? 'var(--success)' : 'var(--error)', marginBottom: 20, fontFamily: 'var(--font-mono)' }}>
+        {up ? '▲' : '▼'} ₹{fmtINR(Math.abs(g.changeInr), 0)} · 24h
       </div>
-      <Sparkline data={data} height={140} fluid />
+      <Sparkline data={g.series} height={140} fluid />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 4, marginTop: 14, fontSize: 9, fontFamily: 'var(--font-mono)' }}>
         {['1H', '1D', '1W', '1M', '1Y'].map((p, i) => (
           <div key={p} style={{
             padding: '6px 0', textAlign: 'center', borderRadius: 6,
-            background: i === 3 ? 'var(--gold-bright)' : 'transparent',
-            color: i === 3 ? 'var(--gold-ink)' : 'var(--text-secondary)',
-            border: i === 3 ? 'none' : '1px solid var(--border)',
+            background: i === 1 ? 'var(--gold-bright)' : 'transparent',
+            color: i === 1 ? 'var(--gold-ink)' : 'var(--text-secondary)',
+            border: i === 1 ? 'none' : '1px solid var(--border)',
           }}>{p}</div>
         ))}
       </div>
       <div style={{ marginTop: 16, padding: 10, background: 'var(--surface)', borderRadius: 10, fontSize: 10, fontFamily: 'var(--font-mono)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}><span style={{ color: 'var(--text-muted)' }}>OPEN</span><span>₹7,684</span></div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}><span style={{ color: 'var(--text-muted)' }}>HIGH</span><span>₹7,742</span></div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{ color: 'var(--text-muted)' }}>LOW</span><span>₹7,672</span></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}><span style={{ color: 'var(--text-muted)' }}>OPEN</span><span>₹{fmtINR(open, 0)}</span></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}><span style={{ color: 'var(--text-muted)' }}>HIGH</span><span>₹{fmtINR(high, 0)}</span></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{ color: 'var(--text-muted)' }}>LOW</span><span>₹{fmtINR(low, 0)}</span></div>
       </div>
     </div>
   );

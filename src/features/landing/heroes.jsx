@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Sparkline, Reveal, useLivePrice, genPriceData } from '../../components/primitives';
+import { Sparkline, Reveal, useGoldPrice, fmtINR } from '../../components/primitives';
 
 export function HeroEditorial({ onLaunch }) {
   return (
@@ -55,8 +55,8 @@ export function HeroEditorial({ onLaunch }) {
 }
 
 function HeroVaultPlate() {
-  const data = React.useMemo(() => genPriceData(60, 2380, 16), []);
-  const { val, delta } = useLivePrice(2384.50);
+  const g = useGoldPrice();
+  const up = g.changeInr >= 0;
   return (
     <div style={{ position: 'relative', aspectRatio: '5/6', margin: '0 auto' }} className="gf-vault-plate">
       {/* Big bar */}
@@ -86,13 +86,13 @@ function HeroVaultPlate() {
           <span className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>24K · INR / gram</span>
         </div>
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, letterSpacing: '-0.03em' }}>
-          ₹{(15369 + val * 0.005).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          ₹{fmtINR(g.perGram24k, 0)}
         </div>
-        <div style={{ fontSize: 12, color: delta >= 0 ? 'var(--success)' : 'var(--error)', fontFamily: 'var(--font-mono)' }}>
-          {delta >= 0 ? '▲' : '▼'} ₹{Math.abs(delta * 3).toFixed(0)} · 24h
+        <div style={{ fontSize: 12, color: up ? 'var(--success)' : 'var(--error)', fontFamily: 'var(--font-mono)' }}>
+          {up ? '▲' : '▼'} ₹{fmtINR(Math.abs(g.changeInr), 0)} · 24h
         </div>
         <div style={{ marginTop: 10, opacity: 0.95 }}>
-          <Sparkline data={data} height={42} fluid />
+          <Sparkline data={g.series} height={42} fluid />
         </div>
       </div>
 
@@ -108,7 +108,7 @@ function HeroVaultPlate() {
           <div style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, background: 'var(--gold-bright)', color: 'var(--gold-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13 }}>✓</div>
           <div>
             <div style={{ fontSize: 13, fontWeight: 600 }}>Gold credited to your vault</div>
-            <div style={{ fontSize: 11, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>0.0648 g · ₹500</div>
+            <div style={{ fontSize: 11, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>{(500 / g.perGram24k).toFixed(4)} g · ₹500</div>
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-muted)', borderTop: '1px solid var(--border-subtle)', paddingTop: 8, fontFamily: 'var(--font-mono)' }}>
