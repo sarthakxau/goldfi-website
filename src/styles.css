@@ -803,11 +803,11 @@ button:focus-visible, a:focus-visible {
   .gf-waitlist-trust { margin-top: 96px; padding-top: 36px; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
 }
 
-.gf-footer-inner { padding: 56px 0 32px; }
+.gf-footer-inner { padding-top: 56px; padding-bottom: 32px; }
 .gf-footer-cols { margin-bottom: 40px; }
 .gf-footer-bottom { padding-top: 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 @media (min-width: 1024px) {
-  .gf-footer-inner { padding: 80px 0 40px; }
+  .gf-footer-inner { padding-top: 80px; padding-bottom: 40px; }
   .gf-footer-cols { margin-bottom: 64px; }
   .gf-footer-bottom { padding-top: 28px; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; }
 }
