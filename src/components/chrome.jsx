@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import { useGoldPrice, fmtINR } from './primitives';
 
 // Site chrome: top nav + footer + price marquee strip
 
@@ -34,10 +35,10 @@ function ThemeSwitcher() {
     window.dispatchEvent(new CustomEvent('gf-theme-change', { detail: t }));
   };
   return (
-    <div style={{ display: 'inline-flex', gap: 2, padding: 3, borderRadius: 999, border: '1px solid var(--border)', background: 'var(--surface-sunken)' }}>
+    <div className="gf-theme-switcher" style={{ display: 'inline-flex', gap: 2, padding: 3, borderRadius: 999, border: '1px solid var(--border)', background: 'var(--surface-sunken)' }}>
       {themes.map((t) => (
-        <button key={t.id} onClick={() => apply(t.id)} style={{
-          padding: '4px 10px', borderRadius: 999, fontSize: 10,
+        <button key={t.id} onClick={() => apply(t.id)} className="gf-theme-pill" style={{
+          borderRadius: 999, fontSize: 10,
           fontFamily: 'var(--font-mono)', letterSpacing: '0.16em',
           background: theme === t.id ? 'var(--gold-bright)' : 'transparent',
           color: theme === t.id ? 'var(--gold-ink)' : 'var(--text-secondary)',
@@ -45,6 +46,86 @@ function ThemeSwitcher() {
           textTransform: 'uppercase',
         }}>{t.label}</button>
       ))}
+    </div>
+  );
+}
+
+const NAV_LINKS = [
+  { label: 'Product',  hash: 'product' },
+  { label: 'Security', hash: 'security' },
+  { label: 'Learn',    hash: 'learn' },
+];
+
+function MobileNav({ headerHeight, onLaunch }) {
+  const [open, setOpen] = React.useState(false);
+  const btnRef = React.useRef(null);
+  const panelRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const html = document.documentElement;
+    const prevOverflow = html.style.overflow;
+    html.style.overflow = 'hidden';
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    const first = panelRef.current && panelRef.current.querySelector('a, button');
+    if (first) first.focus();
+    return () => {
+      html.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+      if (btnRef.current) btnRef.current.focus();
+    };
+  }, [open]);
+
+  const go = (href) => { setOpen(false); window.location.assign(href); };
+
+  return (
+    <div className="gf-nav-toggle">
+      <button
+        ref={btnRef}
+        aria-label="Menu"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        style={{
+          width: 44, height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          borderRadius: 12, color: 'var(--text-primary)',
+        }}
+      >
+        {open ? <X size={22} strokeWidth={1.8} /> : <Menu size={22} strokeWidth={1.8} />}
+      </button>
+
+      {open && (
+        <>
+          <div className="gf-nav-panel-backdrop" style={{ top: headerHeight }} onClick={() => setOpen(false)} />
+          <nav ref={panelRef} className="gf-nav-panel" style={{ top: headerHeight, padding: '8px 20px 20px' }}>
+            {NAV_LINKS.map((x) => (
+              <a
+                key={x.label}
+                href={'/#' + x.hash}
+                onClick={(e) => { e.preventDefault(); go('/#' + x.hash); }}
+                style={{
+                  display: 'flex', alignItems: 'center', minHeight: 48,
+                  fontSize: 16, color: 'var(--text-secondary)',
+                  borderBottom: '1px solid var(--border-subtle)',
+                }}
+              >
+                {x.label}
+              </a>
+            ))}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginTop: 16 }}>
+              <button
+                className="gf-cta"
+                style={{ flex: 1 }}
+                onClick={() => { setOpen(false); (onLaunch || (() => window.location.assign('/#waitlist')))(); }}
+              >
+                Join waitlist
+                <ArrowRight size={14} strokeWidth={1.8} />
+              </button>
+              <ThemeSwitcher />
+            </div>
+          </nav>
+        </>
+      )}
     </div>
   );
 }
@@ -57,6 +138,7 @@ export function TopNav({ onLaunch }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+  const headerHeight = 64;
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 50,
@@ -66,41 +148,40 @@ export function TopNav({ onLaunch }) {
       borderBottom: scrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
       transition: 'background 240ms var(--ease-out), border-color 240ms var(--ease-out), backdrop-filter 240ms var(--ease-out)',
     }}>
-      <div className="gf-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
+      <div className="gf-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: headerHeight }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <img src="/logo.svg" alt="goldfi" style={{ height: 28, width: 'auto', display: 'block' }} />
+          <img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} />
         </a>
-        <nav style={{ display: 'flex', gap: 28, alignItems: 'center', fontSize: 14, color: 'var(--text-secondary)' }}>
-          {[
-            { label: 'Product',  hash: 'product' },
-            { label: 'Security', hash: 'security' },
-            { label: 'Learn',    hash: 'learn' },
-          ].map((x) => (
+        <nav className="gf-nav-desktop" style={{ gap: 28, alignItems: 'center', fontSize: 14, color: 'var(--text-secondary)' }}>
+          {NAV_LINKS.map((x) => (
             <a key={x.label} href={'/#' + x.hash} style={{ transition: 'color 150ms' }}
                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}>{x.label}</a>
           ))}
         </nav>
-        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-          {/* <a href="/#waitlist" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Sign in</a>*/}
+        <div className="gf-nav-desktop" style={{ gap: 12, alignItems: 'center' }}>
           <button className="gf-cta" onClick={onLaunch || (() => { window.location.assign('/#waitlist'); })} style={{ padding: '10px 18px', fontSize: 14 }}>
             Join waitlist
             <ArrowRight size={14} strokeWidth={1.8} />
           </button>
         </div>
+        <MobileNav headerHeight={headerHeight} onLaunch={onLaunch} />
       </div>
     </header>
   );
 }
 
 export function PriceStrip() {
+  const g = useGoldPrice();
+  const goldUp = g.changePct >= 0;
+  const goldDelta = `${goldUp ? '+' : '−'}${Math.abs(g.changePct).toFixed(2)}%`;
   const items = [
-    { label: '24K Gold',      val: '₹7,712 / g',   d: '+0.42%', up: true },
-    { label: '22K Gold',      val: '₹7,068 / g',   d: '+0.41%', up: true },
+    { label: '24K Gold',      val: `₹${fmtINR(g.perGram24k, 0)} / g`, d: goldDelta, up: goldUp },
+    { label: '22K Gold',      val: `₹${fmtINR(g.perGram22k, 0)} / g`, d: goldDelta, up: goldUp },
     { label: 'Silver',        val: '₹93.20 / g',   d: '−0.18%', up: false },
-    { label: 'USD / INR',     val: '₹83.42',       d: '+0.07%', up: true },
+    { label: 'USD / INR',     val: `₹${fmtINR(g.usdInr, 2)}`,         d: '',       up: true },
     { label: 'Sensex',        val: '78,420',         d: '+0.31%', up: true },
-    { label: 'BTC / 10g',     val: '0.0036 BTC',     d: '+0.04', up: true },
+    { label: 'BTC / 10g',     val: `${g.btcPer10g.toFixed(4)} BTC`,   d: '',       up: true },
     { label: 'Vault total',   val: '2,400 kg',       d: 'live',  up: true },
   ];
   const row = (
@@ -135,13 +216,13 @@ export function Footer() {
   return (
     <footer style={{ background: 'var(--bg-deep)', borderTop: '1px solid var(--border-subtle)', position: 'relative', overflow: 'hidden' }}>
       <div className="gf-guilloche" />
-      <div className="gf-container" style={{ position: 'relative', padding: '80px 32px 40px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(2, 1fr)', gap: 40, marginBottom: 64 }}>
-          <div>
+      <div className="gf-container gf-footer-inner" style={{ position: 'relative' }}>
+        <div className="gf-footer-grid gf-footer-cols">
+          <div className="gf-footer-brand">
             <div style={{ marginBottom: 16 }}>
               <a href="/"><img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} /></a>
             </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 280 }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 320 }}>
               Save into 24K gold on your phone. Buy from ₹100 with UPI, settled into Tether Gold (XAUT).
             </p>
             <div style={{ marginTop: 24 }}>
@@ -162,9 +243,9 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div style={{ paddingTop: 28, borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, fontSize: 12, color: 'var(--text-muted)' }}>
+        <div className="gf-footer-bottom" style={{ borderTop: '1px solid var(--border-subtle)', fontSize: 12, color: 'var(--text-muted)' }}>
           <div>© 2026 Bullion Digital (BVI) Ltd. All rights reserved. Gold purchases are subject to GST. Past performance does not guarantee future returns.</div>
-          <div style={{ display: 'flex', gap: 18, alignItems: 'center', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.18em', fontSize: 11 }}>
+          <div style={{ display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.18em', fontSize: 11 }}>
             <span>XAUT-backed</span>
             <span>On-chain verifiable</span>
             <span>UPI · NPCI</span>

@@ -5,7 +5,7 @@
 function LegalShell({ kind, title, children }) {
   return (
     <main style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)', minHeight: '100vh', paddingTop: 24 }}>
-      <div className="gf-container" style={{ padding: '40px 32px 96px', maxWidth: 880 }}>
+      <div className="gf-container gf-legal-shell" style={{ maxWidth: 880 }}>
         <div style={{ marginBottom: 32 }}>
           <a href="/" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
             ← Back to goldfi
@@ -14,7 +14,7 @@ function LegalShell({ kind, title, children }) {
         <div style={{ marginBottom: 8, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold-bright)' }}>
           {kind}
         </div>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 1.05, margin: '0 0 12px' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 6vw, 56px)', lineHeight: 1.05, margin: '0 0 12px' }}>
           {title}
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 8 }}>goldfi platform, India</p>
@@ -30,7 +30,7 @@ function LegalShell({ kind, title, children }) {
 }
 
 const H2 = ({ children }) => (
-  <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 26, lineHeight: 1.2, color: 'var(--text-primary)', margin: '48px 0 16px' }}>{children}</h2>
+  <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(20px, 4.5vw, 26px)', lineHeight: 1.25, color: 'var(--text-primary)', margin: '40px 0 16px' }}>{children}</h2>
 );
 
 const P = ({ children, ...rest }) => (
@@ -59,8 +59,8 @@ const Callout = ({ tone = 'warn', title, children }) => (
 );
 
 const Table = ({ headers, rows }) => (
-  <div style={{ overflowX: 'auto', margin: '16px 0 24px' }}>
-    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+  <div style={{ overflowX: 'auto', margin: '16px 0 24px', WebkitOverflowScrolling: 'touch' }}>
+    <table style={{ width: '100%', minWidth: 440, borderCollapse: 'collapse', fontSize: 14 }}>
       <thead>
         <tr>
           {headers.map((h) => (
