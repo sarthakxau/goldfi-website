@@ -776,6 +776,9 @@ button:focus-visible, a:focus-visible {
   .gf-vault-static { display: none; }
 }
 
+.gf-app-mockup-raise { margin-bottom: 0; }
+@media (min-width: 1024px) { .gf-app-mockup-raise { margin-bottom: 40px; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

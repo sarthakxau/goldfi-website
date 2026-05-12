@@ -218,19 +218,19 @@ function VaultDiagram() {
 
 export function AppShowcase() {
   return (
-    <section id="app" style={{ padding: '140px 0', position: 'relative', overflow: 'hidden' }}>
+    <section id="app" className="gf-section-lg" style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="gf-container">
-        <div style={{ textAlign: 'center', marginBottom: 80 }}>
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20, justifyContent: 'center' }}>The app</div></Reveal>
-          <Reveal delay={80}><h2 className="gf-h2" style={{ maxWidth: 800, margin: '0 auto 20px' }}>Buy. Save. Sell. <em>Gift.</em><br />All from your pocket.</h2></Reveal>
+          <Reveal delay={80}><h2 className="gf-h2" style={{ maxWidth: 800, margin: '0 auto 16px' }}>Buy. Save. Sell. <em>Gift.</em><br />All from your pocket.</h2></Reveal>
           <Reveal delay={160}><p className="gf-lede" style={{ margin: '0 auto', textAlign: 'center' }}>Designed by people who use it daily: to set up a daily SIP, round up UPI payments, or send a gram of gold for a wedding or birthday.</p></Reveal>
         </div>
-        <div style={{ display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+        <div className="gf-phone-scroller">
           <Reveal delay={100}><AppMockup kind="home" tag="Home" /></Reveal>
-          <Reveal delay={200} style={{ marginBottom: 40 }}><AppMockup kind="buy" tag="Buy" highlight /></Reveal>
+          <Reveal delay={200} className="gf-app-mockup-raise"><AppMockup kind="buy" tag="Buy" highlight /></Reveal>
           <Reveal delay={300}><AppMockup kind="chart" tag="Live charts" /></Reveal>
         </div>
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 56 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
           <a href="#waitlist" className="gf-cta" style={{ padding: '14px 26px' }}>
             Join the waitlist
             <ArrowRight size={14} strokeWidth={1.8} />
@@ -274,7 +274,7 @@ function AppHome({ data }) {
         <div style={{ fontSize: 11, color: 'var(--success)' }}>▲ ₹128 · 1.04% · 1.62 g</div>
       </div>
       <div style={{ background: 'var(--surface)', borderRadius: 12, padding: 12, border: '1px solid var(--border)', marginBottom: 12 }}>
-        <Sparkline data={data} width={210} height={56} />
+        <Sparkline data={data} height={56} fluid />
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', marginTop: 6 }}>
           <span>1D</span><span>1W</span><span>1M</span><span style={{ color: 'var(--gold-bright)' }}>1Y</span><span>ALL</span>
         </div>
@@ -333,7 +333,7 @@ function AppChart({ delta, data }) {
       <div style={{ fontSize: 11, color: delta >= 0 ? 'var(--success)' : 'var(--error)', marginBottom: 20, fontFamily: 'var(--font-mono)' }}>
         {delta >= 0 ? '▲' : '▼'} ₹{Math.abs(delta * 3).toFixed(0)} · 24h
       </div>
-      <Sparkline data={data} width={228} height={140} />
+      <Sparkline data={data} height={140} fluid />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 4, marginTop: 14, fontSize: 9, fontFamily: 'var(--font-mono)' }}>
         {['1H', '1D', '1W', '1M', '1Y'].map((p, i) => (
           <div key={p} style={{
