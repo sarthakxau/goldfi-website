@@ -111,9 +111,9 @@ export function FAQ() {
   ];
   const [open, setOpen] = React.useState(0);
   return (
-    <section id="learn" style={{ padding: '120px 0', background: 'var(--bg-elev-1)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+    <section id="learn" className="gf-section" style={{ background: 'var(--bg-elev-1)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
       <div className="gf-container" style={{ maxWidth: 980 }}>
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+        <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20, justifyContent: 'center' }}>Frequently asked</div></Reveal>
           <Reveal delay={80}><h2 className="gf-h2">Questions, <em>answered.</em></h2></Reveal>
         </div>
@@ -122,14 +122,14 @@ export function FAQ() {
             <Reveal key={q} delay={i * 50}>
               <div style={{ borderTop: i === 0 ? '1px solid var(--border)' : 'none', borderBottom: '1px solid var(--border)' }}>
                 <button onClick={() => setOpen(open === i ? -1 : i)} style={{
-                  width: '100%', padding: '24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24,
+                  width: '100%', padding: '20px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16,
                   textAlign: 'left',
                 }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, letterSpacing: '-0.01em', color: open === i ? 'var(--gold-bright)' : 'var(--text-primary)' }}>{q}</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(18px, 4.5vw, 22px)', fontWeight: 400, letterSpacing: '-0.01em', color: open === i ? 'var(--gold-bright)' : 'var(--text-primary)' }}>{q}</span>
                   <span style={{ width: 32, height: 32, borderRadius: 999, border: '1px solid var(--border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--text-secondary)', fontSize: 16, transform: open === i ? 'rotate(45deg)' : 'none', transition: 'transform 200ms' }}>+</span>
                 </button>
-                <div style={{ maxHeight: open === i ? 240 : 0, overflow: 'hidden', transition: 'max-height 320ms var(--ease-out)' }}>
-                  <p style={{ paddingBottom: 24, fontSize: 16, color: 'var(--text-secondary)', maxWidth: '70ch', lineHeight: 1.6 }}>{a}</p>
+                <div style={{ maxHeight: open === i ? 800 : 0, overflow: 'hidden', transition: 'max-height 360ms var(--ease-out)' }}>
+                  <p style={{ paddingBottom: 24, fontSize: 'clamp(14px, 3.6vw, 16px)', color: 'var(--text-secondary)', maxWidth: '70ch', lineHeight: 1.6 }}>{a}</p>
                 </div>
               </div>
             </Reveal>
