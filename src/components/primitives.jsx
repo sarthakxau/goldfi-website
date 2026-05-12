@@ -22,7 +22,6 @@ export function useLivePrice(base = 2384.50) {
   return { val, delta };
 }
 
-// Mini sparkline path
 // Mini sparkline path. Pass fluid to make the SVG fill its parent's width.
 export function Sparkline({ data, width = 200, height = 50, fluid = false, stroke = 'var(--gold-bright)', fill = 'rgba(245,184,50,0.12)' }) {
   if (!data || data.length === 0) return null;
