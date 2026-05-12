@@ -21,12 +21,12 @@ export function Waitlist() {
   };
 
   return (
-    <section id="waitlist" style={{ padding: '140px 0 120px', position: 'relative', overflow: 'hidden', background: 'var(--bg-deep)' }}>
+    <section id="waitlist" className="gf-waitlist-section" style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg-deep)' }}>
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(50% 60% at 50% 40%, rgba(245,184,50,0.16) 0%, transparent 70%)' }} />
       <div className="gf-grid-bg" />
       <div className="gf-guilloche" />
       <div className="gf-container" style={{ position: 'relative' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 80, alignItems: 'center' }}>
+        <div className="gf-split" style={{ alignItems: 'center' }}>
           {/* Left: pitch */}
           <div>
             <Reveal>
@@ -60,7 +60,7 @@ export function Waitlist() {
 
           {/* Right: form card */}
           <Reveal delay={200}>
-            <div className="gf-card-elev" style={{ padding: 32, position: 'relative', overflow: 'hidden' }}>
+            <div className="gf-card-elev gf-waitlist-card" style={{ position: 'relative', overflow: 'hidden' }}>
               {status !== 'done' ? (
                 <form onSubmit={submit}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
@@ -111,7 +111,7 @@ export function Waitlist() {
 
                   <div style={{ marginBottom: 20 }}>
                     <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--text-tertiary)', marginBottom: 10 }}>I'd primarily use it for</div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+                    <div className="gf-waitlist-usecases" style={{ gap: 8 }}>
                       {[
                         { id: 'sip', label: 'Daily / weekly SIP' },
                         { id: 'lump', label: 'Lump-sum savings' },
@@ -164,11 +164,11 @@ export function Waitlist() {
         </div>
 
         {/* Trust strip */}
-        <div style={{ marginTop: 96, paddingTop: 36, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24, alignItems: 'center' }}>
+        <div className="gf-waitlist-trust" style={{ borderTop: '1px solid var(--border)' }}>
           <div style={{ fontSize: 12, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
             Backed by ·
           </div>
-          <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap', alignItems: 'center', flex: 1, justifyContent: 'flex-end', fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--text-muted)', letterSpacing: '0.02em' }}>
+          <div style={{ display: 'flex', gap: 'clamp(16px, 4vw, 40px)', flexWrap: 'wrap', alignItems: 'center', flex: 1, justifyContent: 'flex-end', fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--text-muted)', letterSpacing: '0.02em' }}>
             <span>Tether Gold (XAUT)</span>
             <span style={{ color: 'var(--border-strong)' }}>·</span>
             <span>On-chain verifiable</span>

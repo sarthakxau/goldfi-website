@@ -790,6 +790,23 @@ button:focus-visible, a:focus-visible {
   .gf-autosave-log-row .gf-autosave-log-src { display: block; }
 }
 
+.gf-waitlist-section { padding: 72px 0 64px; }
+@media (min-width: 1024px) { .gf-waitlist-section { padding: 140px 0 120px; } }
+
+.gf-waitlist-card { padding: 20px; }
+@media (min-width: 640px) { .gf-waitlist-card { padding: 32px; } }
+
+.gf-waitlist-usecases { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 380px) { .gf-waitlist-usecases { grid-template-columns: repeat(2, 1fr); } }
+
+.gf-waitlist-trust {
+  margin-top: 48px; padding-top: 24px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+}
+@media (min-width: 1024px) {
+  .gf-waitlist-trust { margin-top: 96px; padding-top: 36px; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
