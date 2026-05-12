@@ -58,7 +58,7 @@ function HeroVaultPlate() {
   const data = React.useMemo(() => genPriceData(60, 2380, 16), []);
   const { val, delta } = useLivePrice(2384.50);
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: 'min(420px, 92vw)', aspectRatio: '5/6', margin: '0 auto' }} className="gf-vault-plate">
+    <div style={{ position: 'relative', aspectRatio: '5/6', margin: '0 auto' }} className="gf-vault-plate">
       {/* Big bar */}
       <div style={{
         position: 'absolute', inset: '8% 4% 14% 6%',

@@ -755,12 +755,13 @@ button:focus-visible, a:focus-visible {
   .gf-hero-inner { padding-top: 96px; padding-bottom: 72px; }
 }
 
-/* Hero vault plate floating chips */
+/* Hero vault plate + floating chips */
+.gf-vault-plate { width: min(380px, 88vw); }
 .gf-vault-chip { width: min(220px, 64%); }
 .gf-vault-chip--price   { top: 2%;  right: 2%; }
 .gf-vault-chip--receipt { bottom: 0; left: 2%; }
 @media (min-width: 1024px) {
-  .gf-vault-plate { max-width: 560px !important; }
+  .gf-vault-plate { width: 100%; max-width: 560px; }
   .gf-vault-chip--price   { top: 4%;  right: -6%; width: 220px; }
   .gf-vault-chip--receipt { bottom: 0; left: -4%;  width: 240px; }
 }
