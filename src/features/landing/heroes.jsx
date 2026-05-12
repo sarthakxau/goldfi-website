@@ -33,7 +33,7 @@ export function HeroEditorial({ onLaunch }) {
                   Join the waitlist
                   <ArrowRight size={14} strokeWidth={1.8} />
                 </button>
-                <button className="gf-cta-ghost">Watch 90-second tour</button>
+                <button className="gf-cta-ghost" disabled style={{ opacity: 0.45, cursor: 'not-allowed' }}>Watch 90-second tour</button>
                 <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Start from ₹100 · No paperwork</span>
               </div>
             </Reveal>

@@ -33,7 +33,7 @@ Set up UPI Autopay once. Save ₹100 a week, ₹500 a month, or whatever fits yo
             <Reveal delay={320}>
               <div className="gf-cta-stack">
                 <button className="gf-cta" onClick={onWaitlist}>Join the waitlist →</button>
-                <button className="gf-cta-ghost">Calculate returns</button>
+                <button className="gf-cta-ghost" disabled style={{ opacity: 0.45, cursor: 'not-allowed' }}>Calculate returns</button>
               </div>
             </Reveal>
           </div>
