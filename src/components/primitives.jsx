@@ -23,7 +23,8 @@ export function useLivePrice(base = 2384.50) {
 }
 
 // Mini sparkline path
-export function Sparkline({ data, width = 200, height = 50, stroke = 'var(--gold-bright)', fill = 'rgba(245,184,50,0.12)' }) {
+// Mini sparkline path. Pass fluid to make the SVG fill its parent's width.
+export function Sparkline({ data, width = 200, height = 50, fluid = false, stroke = 'var(--gold-bright)', fill = 'rgba(245,184,50,0.12)' }) {
   if (!data || data.length === 0) return null;
   const min = Math.min(...data), max = Math.max(...data);
   const range = max - min || 1;
@@ -32,7 +33,13 @@ export function Sparkline({ data, width = 200, height = 50, stroke = 'var(--gold
   const path = pts.map((p, i) => (i === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`)).join(' ');
   const area = `${path} L${width},${height} L0,${height} Z`;
   return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" style={{ display: 'block' }}>
+    <svg
+      width={fluid ? '100%' : width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="none"
+      style={{ display: 'block', maxWidth: '100%' }}
+    >
       <path d={area} fill={fill} />
       <path d={path} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
     </svg>
@@ -65,11 +72,11 @@ function useInView(opts = { threshold: 0.18 }) {
   return [ref, inView];
 }
 
-export function Reveal({ children, delay = 0, as = 'div', style = EMPTY_STYLE, ...rest }) {
+export function Reveal({ children, delay = 0, as = 'div', style = EMPTY_STYLE, className = '', ...rest }) {
   const [ref, inView] = useInView();
   const Tag = as;
   return (
-    <Tag ref={ref} className={'gf-reveal' + (inView ? ' in' : '')} style={{ transitionDelay: delay + 'ms', ...style }} {...rest}>
+    <Tag ref={ref} className={('gf-reveal' + (inView ? ' in' : '') + ' ' + className).trim()} style={{ transitionDelay: delay + 'ms', ...style }} {...rest}>
       {children}
     </Tag>
   );
