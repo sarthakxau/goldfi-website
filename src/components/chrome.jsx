@@ -34,10 +34,10 @@ function ThemeSwitcher() {
     window.dispatchEvent(new CustomEvent('gf-theme-change', { detail: t }));
   };
   return (
-    <div style={{ display: 'inline-flex', gap: 2, padding: 3, borderRadius: 999, border: '1px solid var(--border)', background: 'var(--surface-sunken)' }}>
+    <div className="gf-theme-switcher" style={{ display: 'inline-flex', gap: 2, padding: 3, borderRadius: 999, border: '1px solid var(--border)', background: 'var(--surface-sunken)' }}>
       {themes.map((t) => (
-        <button key={t.id} onClick={() => apply(t.id)} style={{
-          padding: '4px 10px', borderRadius: 999, fontSize: 10,
+        <button key={t.id} onClick={() => apply(t.id)} className="gf-theme-pill" style={{
+          borderRadius: 999, fontSize: 10,
           fontFamily: 'var(--font-mono)', letterSpacing: '0.16em',
           background: theme === t.id ? 'var(--gold-bright)' : 'transparent',
           color: theme === t.id ? 'var(--gold-ink)' : 'var(--text-secondary)',
@@ -212,13 +212,13 @@ export function Footer() {
   return (
     <footer style={{ background: 'var(--bg-deep)', borderTop: '1px solid var(--border-subtle)', position: 'relative', overflow: 'hidden' }}>
       <div className="gf-guilloche" />
-      <div className="gf-container" style={{ position: 'relative', padding: '80px 32px 40px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(2, 1fr)', gap: 40, marginBottom: 64 }}>
-          <div>
+      <div className="gf-container gf-footer-inner" style={{ position: 'relative' }}>
+        <div className="gf-footer-grid gf-footer-cols">
+          <div className="gf-footer-brand">
             <div style={{ marginBottom: 16 }}>
               <a href="/"><img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} /></a>
             </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 280 }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, maxWidth: 320 }}>
               Save into 24K gold on your phone. Buy from ₹100 with UPI, settled into Tether Gold (XAUT).
             </p>
             <div style={{ marginTop: 24 }}>
@@ -239,9 +239,9 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div style={{ paddingTop: 28, borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, fontSize: 12, color: 'var(--text-muted)' }}>
+        <div className="gf-footer-bottom" style={{ borderTop: '1px solid var(--border-subtle)', fontSize: 12, color: 'var(--text-muted)' }}>
           <div>© 2026 Bullion Digital (BVI) Ltd. All rights reserved. Gold purchases are subject to GST. Past performance does not guarantee future returns.</div>
-          <div style={{ display: 'flex', gap: 18, alignItems: 'center', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.18em', fontSize: 11 }}>
+          <div style={{ display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.18em', fontSize: 11 }}>
             <span>XAUT-backed</span>
             <span>On-chain verifiable</span>
             <span>UPI · NPCI</span>
