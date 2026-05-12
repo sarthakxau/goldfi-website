@@ -87,7 +87,7 @@ function AutoSaveCard() {
             <div className="font-display" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 7vw, 36px)', fontWeight: 400, letterSpacing: '-0.02em', marginTop: 6 }}>₹100 / day</div>
             <div style={{ fontSize: 12.5, color: 'var(--success)', fontFamily: 'var(--font-mono)' }}>▲ 0.084 g credited today · 5:31 AM</div>
           </div>
-          <div style={{ width: 48, height: 48, flexShrink: 0, borderRadius: 12, background: 'linear-gradient(135deg, var(--cta-1), var(--cta-2), var(--cta-3))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--cta-ink)', fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600 }}>Au</div>
+          <img src="/xaut-icon.svg" alt="Tether Gold (XAUT)" style={{ width: 48, height: 48, flexShrink: 0, objectFit: 'contain', display: 'block' }} />
         </div>
 
         <div style={{ position: 'relative', height: 120, marginBottom: 18 }}>
