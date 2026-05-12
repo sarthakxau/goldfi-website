@@ -768,6 +768,14 @@ button:focus-visible, a:focus-visible {
 .gf-howitworks-lede { padding-top: 0; }
 @media (min-width: 1024px) { .gf-howitworks-lede { padding-top: 40px; } }
 
+/* Vault diagram: static badges below 1024px, orbit at desktop */
+.gf-vault-orbit  { display: none; }
+.gf-vault-static { display: block; }
+@media (min-width: 1024px) {
+  .gf-vault-orbit  { display: block; }
+  .gf-vault-static { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

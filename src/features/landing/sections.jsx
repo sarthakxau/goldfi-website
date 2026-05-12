@@ -59,13 +59,10 @@ function StepIcon({ kind }) {
 
 export function SecuritySection() {
   return (
-    <section id="security" style={{ padding: '120px 0', position: 'relative', background: 'var(--bg-elev-1)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+    <section id="security" className="gf-section" style={{ position: 'relative', background: 'var(--bg-elev-1)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
       <div className="gf-guilloche" />
       <div className="gf-container" style={{ position: 'relative' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
-          <Reveal>
-            <VaultDiagram />
-          </Reveal>
+        <div className="gf-split-even gf-split--visual-first" style={{ alignItems: 'center' }}>
           <div>
             <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20 }}>Custody & insurance</div></Reveal>
             <Reveal delay={80}><h2 className="gf-h2" style={{ marginBottom: 24 }}>Real gold,<br /><em>verifiable on-chain.</em></h2></Reveal>
@@ -93,6 +90,9 @@ export function SecuritySection() {
               ))}
             </div>
           </div>
+          <Reveal className="gf-split__visual">
+            <VaultDiagram />
+          </Reveal>
         </div>
       </div>
     </section>
@@ -102,132 +102,116 @@ export function SecuritySection() {
 function VaultDiagram() {
   const nodes = [
     { label: 'BACKED · XAUT',     sub: 'Tether Gold · 1:1',    start: -70,  dur: 14 },
-    { label: 'CHAIN · ETHEREUM',  sub: 'On-chain verifiable',    start:  20,  dur: 18 },
+    { label: 'CHAIN · ETHEREUM',  sub: 'On-chain verifiable',  start:  20,  dur: 18 },
     { label: 'STANDARD · 1 oz',   sub: '1 XAUT = 1 troy oz',   start: 110,  dur: 22 },
-    { label: 'ATTESTED',          sub: 'Reserve reports',       start: 200,  dur: 16 },
+    { label: 'ATTESTED',          sub: 'Reserve reports',      start: 200,  dur: 16 },
   ];
 
-  return (
-    <div style={{ position: 'relative', aspectRatio: '1/1', maxWidth: 480, margin: '0 auto' }}>
-      <style>{`
-        @keyframes orbit {
-          from { transform: rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start))); }
-          to   { transform: rotate(calc(var(--start) + 360deg)) translateX(var(--r)) rotate(calc(-360deg + -1 * var(--start))); }
-        }
-        .vault-orbit-arm {
-          position: absolute;
-          top: 50%; left: 50%;
-          width: 0; height: 0;
-          transform: rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start)));
-        }
-        .vault-orbit-node {
-          position: absolute;
-          transform: translate(-50%, -50%);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 6px;
-          pointer-events: none;
-          white-space: nowrap;
-        }
-        .vault-orbit-dot {
-          width: 10px; height: 10px;
-          border-radius: 50%;
-          background: var(--gold-bright);
-          box-shadow: 0 0 0 4px rgba(245,184,50,0.18), 0 0 12px rgba(245,184,50,0.35);
-          flex-shrink: 0;
-        }
-        .vault-orbit-label {
-          font-family: monospace;
-          font-size: 9.5px;
-          letter-spacing: 0.14em;
-          font-weight: 700;
-          color: var(--text-primary);
-          text-align: center;
-        }
-        .vault-orbit-sub {
-          font-family: monospace;
-          font-size: 8px;
-          color: var(--text-tertiary);
-          text-align: center;
-          margin-top: -2px;
-        }
-      `}</style>
-
-      {/* SVG rings + glow */}
-      <svg viewBox="0 0 400 400" style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
-        <defs>
-          <radialGradient id="vg2" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(245,184,50,0.32)" />
-            <stop offset="55%" stopColor="rgba(245,184,50,0.04)" />
-            <stop offset="100%" stopColor="rgba(245,184,50,0)" />
-          </radialGradient>
-        </defs>
-        <circle cx="200" cy="200" r="196" fill="url(#vg2)" />
-        {/* Orbit ring */}
-        <circle cx="200" cy="200" r="148" fill="none" stroke="var(--border-strong)" strokeWidth="0.8" strokeDasharray="3 5" opacity="0.6" />
-        {/* Outer ring */}
-        <circle cx="200" cy="200" r="188" fill="none" stroke="var(--border)" strokeWidth="0.5" opacity="0.35" />
-        {/* Inner ring */}
-        <circle cx="200" cy="200" r="100" fill="none" stroke="var(--border)" strokeWidth="0.5" opacity="0.25" />
+  // Used only by the static (mobile/tablet) layout — size is always a number.
+  const VaultCore = ({ size }) => (
+    <div style={{
+      width: size, height: size,
+      background: 'var(--surface-elevated)',
+      border: '1.5px solid var(--gold-bright)',
+      borderRadius: 10,
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8,
+      boxShadow: '0 0 40px rgba(245,184,50,0.18)',
+    }}>
+      <svg viewBox="0 0 60 60" width={size * 0.46} height={size * 0.46}>
+        <circle cx="30" cy="30" r="22" fill="none" stroke="var(--gold-bright)" strokeWidth="1.5" />
+        <circle cx="30" cy="30" r="5" fill="var(--gold-bright)" />
+        {[0, 60, 120, 180, 240, 300].map((a) => {
+          const x = 30 + Math.cos(a * Math.PI / 180) * 22;
+          const y = 30 + Math.sin(a * Math.PI / 180) * 22;
+          return <circle key={a} cx={x} cy={y} r="2" fill="var(--gold-bright)" opacity="0.7" />;
+        })}
+        <line x1="30" y1="30" x2="30" y2="10" stroke="var(--gold-bright)" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
+      <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.28em', color: 'var(--gold-bright)', textTransform: 'uppercase', opacity: 0.85 }}>SECURE</div>
+    </div>
+  );
 
-      {/* Center vault */}
-      <div style={{
-        position: 'absolute',
-        top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '36%', aspectRatio: '1/1',
-        background: 'var(--surface-elevated)',
-        border: '1.5px solid var(--gold-bright)',
-        borderRadius: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 10,
-        boxShadow: '0 0 40px rgba(245,184,50,0.18)',
-      }}>
-        {/* Vault dial */}
-        <svg viewBox="0 0 60 60" width="52" height="52">
-          <circle cx="30" cy="30" r="22" fill="none" stroke="var(--gold-bright)" strokeWidth="1.5" />
-          <circle cx="30" cy="30" r="5" fill="var(--gold-bright)" />
-          {[0, 60, 120, 180, 240, 300].map((a) => {
-            const x = 30 + Math.cos(a * Math.PI / 180) * 22;
-            const y = 30 + Math.sin(a * Math.PI / 180) * 22;
-            return <circle key={a} cx={x} cy={y} r="2" fill="var(--gold-bright)" opacity="0.7" />;
-          })}
-          {/* Handle line */}
-          <line x1="30" y1="30" x2="30" y2="10" stroke="var(--gold-bright)" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-        <div style={{
-          fontFamily: 'monospace',
-          fontSize: 9,
-          letterSpacing: '0.28em',
-          color: 'var(--gold-bright)',
-          textTransform: 'uppercase',
-          opacity: 0.85,
-        }}>SECURE</div>
-      </div>
-
-      {/* Orbital nodes */}
-      {nodes.map((n, i) => (
-        <div
-          key={i}
-          className="vault-orbit-arm"
-          style={{
-            '--start': `${n.start}deg`,
-            '--r': '148px',
-            '--dur': `${n.dur}s`,
-          }}
-        >
-          <div className="vault-orbit-node">
-            <div className="vault-orbit-dot" />
-            <div className="vault-orbit-label">{n.label}</div>
-            <div className="vault-orbit-sub">{n.sub}</div>
+  return (
+    <div className="gf-vault-diagram" style={{ position: 'relative', margin: '0 auto', maxWidth: 480 }}>
+      {/* --- Static layout: mobile + tablet (< 1024px) --- */}
+      <div className="gf-vault-static">
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+          <div style={{ position: 'relative', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: 28, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,184,50,0.16) 0%, transparent 70%)' }}>
+            <VaultCore size={108} />
           </div>
         </div>
-      ))}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
+          {nodes.map((n) => (
+            <div key={n.label} style={{ background: 'var(--surface)', padding: '14px 14px', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <div style={{ width: 8, height: 8, marginTop: 5, borderRadius: '50%', background: 'var(--gold-bright)', boxShadow: '0 0 0 4px rgba(245,184,50,0.18)', flexShrink: 0 }} />
+              <div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10.5, letterSpacing: '0.12em', fontWeight: 700, color: 'var(--text-primary)' }}>{n.label}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9.5, color: 'var(--text-tertiary)', marginTop: 2 }}>{n.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* --- Orbit layout: desktop (>= 1024px) --- */}
+      <div className="gf-vault-orbit" style={{ position: 'relative', aspectRatio: '1/1' }}>
+        <style>{`
+          @keyframes orbit {
+            from { transform: rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start))); }
+            to   { transform: rotate(calc(var(--start) + 360deg)) translateX(var(--r)) rotate(calc(-360deg + -1 * var(--start))); }
+          }
+          .vault-orbit-arm {
+            position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+            transform: rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start)));
+          }
+          .vault-orbit-node {
+            position: absolute; transform: translate(-50%, -50%);
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            pointer-events: none; white-space: nowrap;
+          }
+          .vault-orbit-dot {
+            width: 10px; height: 10px; border-radius: 50%; background: var(--gold-bright);
+            box-shadow: 0 0 0 4px rgba(245,184,50,0.18), 0 0 12px rgba(245,184,50,0.35); flex-shrink: 0;
+          }
+          .vault-orbit-label { font-family: monospace; font-size: 9.5px; letter-spacing: 0.14em; font-weight: 700; color: var(--text-primary); text-align: center; }
+          .vault-orbit-sub { font-family: monospace; font-size: 8px; color: var(--text-tertiary); text-align: center; margin-top: -2px; }
+        `}</style>
+        <svg viewBox="0 0 400 400" style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
+          <defs>
+            <radialGradient id="vg2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(245,184,50,0.32)" />
+              <stop offset="55%" stopColor="rgba(245,184,50,0.04)" />
+              <stop offset="100%" stopColor="rgba(245,184,50,0)" />
+            </radialGradient>
+          </defs>
+          <circle cx="200" cy="200" r="196" fill="url(#vg2)" />
+          <circle cx="200" cy="200" r="148" fill="none" stroke="var(--border-strong)" strokeWidth="0.8" strokeDasharray="3 5" opacity="0.6" />
+          <circle cx="200" cy="200" r="188" fill="none" stroke="var(--border)" strokeWidth="0.5" opacity="0.35" />
+          <circle cx="200" cy="200" r="100" fill="none" stroke="var(--border)" strokeWidth="0.5" opacity="0.25" />
+        </svg>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '36%', aspectRatio: '1/1', background: 'var(--surface-elevated)', border: '1.5px solid var(--gold-bright)', borderRadius: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 0 40px rgba(245,184,50,0.18)' }}>
+          <svg viewBox="0 0 60 60" width="52" height="52">
+            <circle cx="30" cy="30" r="22" fill="none" stroke="var(--gold-bright)" strokeWidth="1.5" />
+            <circle cx="30" cy="30" r="5" fill="var(--gold-bright)" />
+            {[0, 60, 120, 180, 240, 300].map((a) => {
+              const x = 30 + Math.cos(a * Math.PI / 180) * 22;
+              const y = 30 + Math.sin(a * Math.PI / 180) * 22;
+              return <circle key={a} cx={x} cy={y} r="2" fill="var(--gold-bright)" opacity="0.7" />;
+            })}
+            <line x1="30" y1="30" x2="30" y2="10" stroke="var(--gold-bright)" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.28em', color: 'var(--gold-bright)', textTransform: 'uppercase', opacity: 0.85 }}>SECURE</div>
+        </div>
+        {nodes.map((n, i) => (
+          <div key={i} className="vault-orbit-arm" style={{ '--start': `${n.start}deg`, '--r': '148px', '--dur': `${n.dur}s` }}>
+            <div className="vault-orbit-node">
+              <div className="vault-orbit-dot" />
+              <div className="vault-orbit-label">{n.label}</div>
+              <div className="vault-orbit-sub">{n.sub}</div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
