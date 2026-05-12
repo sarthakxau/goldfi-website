@@ -11,30 +11,30 @@ export function HowItWorks() {
     { n: '03', t: 'Sell, gift, or redeem', d: 'Sell back to your bank in 15 minutes. Send grams to anyone via a link. Redeem 24K coins or jewellery once you cross 1 tola from your nearest Jeweller.', icon: 'send' },
   ];
   return (
-    <section id="product" style={{ padding: '120px 0', position: 'relative' }}>
+    <section id="product" className="gf-section" style={{ position: 'relative' }}>
       <div className="gf-container">
-        <div style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.2fr', gap: 80, alignItems: 'start', marginBottom: 56 }}>
+        <div className="gf-split-bias" style={{ alignItems: 'start', marginBottom: 48 }}>
           <div>
             <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20 }}>How it works</div></Reveal>
             <Reveal delay={80}><h2 className="gf-h2">From phone to <em>vault,</em><br />in three steps.</h2></Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="gf-lede" style={{ paddingTop: 40 }}>
+            <p className="gf-lede gf-howitworks-lede">
               No paperwork. No mark-ups. Each gram you buy is settled in Tether Gold (XAUT), backed by serialised LBMA Good Delivery 24K bars held by Tether's London custodian. Cross 1 tola and you can redeem 24K coins shipped to your door.
             </p>
           </Reveal>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
+        <div className="gf-cols-3-flat" style={{ gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
           {steps.map((s, i) => (
             <Reveal key={s.n} delay={i * 100}>
               <div style={{
-                background: 'var(--surface)', padding: '36px 28px 32px', height: '100%',
-                position: 'relative', minHeight: 280,
+                background: 'var(--surface)', padding: '28px 20px', height: '100%',
+                position: 'relative',
                 transition: 'background 200ms',
               }}
               onMouseEnter={(e) => e.currentTarget.style.background = 'var(--surface-elevated)'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'var(--surface)'}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
                   <div className="font-mono" style={{ fontSize: 11, color: 'var(--gold-bright)', letterSpacing: '0.18em' }}>{s.n} / 03</div>
                   <StepIcon kind={s.icon} />
                 </div>

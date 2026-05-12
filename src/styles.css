@@ -765,6 +765,9 @@ button:focus-visible, a:focus-visible {
   .gf-vault-chip--receipt { bottom: 0; left: -4%;  width: 240px; }
 }
 
+.gf-howitworks-lede { padding-top: 0; }
+@media (min-width: 1024px) { .gf-howitworks-lede { padding-top: 40px; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
