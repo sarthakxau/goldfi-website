@@ -4,11 +4,12 @@ import { Sparkline, Reveal } from '../../components/primitives';
 // Remaining sections: Auto-Save, FAQ
 
 export function AutoSave() {
+  const onWaitlist = () => { const el = document.getElementById('waitlist'); if (el) { const top = el.getBoundingClientRect().top + window.scrollY - 24; window.scrollTo({ top, behavior: 'smooth' }); } };
   return (
-    <section id="auto-save" style={{ padding: '120px 0', position: 'relative', background: 'var(--bg-elev-1)' }}>
+    <section id="auto-save" className="gf-section" style={{ position: 'relative', background: 'var(--bg-elev-1)' }}>
       <div className="gf-grid-bg" />
       <div className="gf-container" style={{ position: 'relative' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div className="gf-split-even" style={{ alignItems: 'center' }}>
           <div>
             <Reveal><div className="gf-eyebrow" style={{ marginBottom: 20 }}>Auto-save in gold</div></Reveal>
             <Reveal delay={80}><h2 className="gf-h2" style={{ marginBottom: 24 }}>A savings habit<br /><em>that protects itself.</em></h2></Reveal>
@@ -16,22 +17,22 @@ export function AutoSave() {
 Set up UPI Autopay once. Save ₹100 a week, ₹500 a month, or whatever fits your salary cycle. Each contribution settles into Tether Gold (XAUT), where each token is backed 1:1 by a troy ounce of LBMA Good Delivery 24K bullion. No lock-in. Withdraw anytime.
             </p></Reveal>
             <Reveal delay={240}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 32 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 32 }}>
                 {[
                   ['₹100', 'Minimum SIP'],
                   ['0%', 'Setup fee'],
                   ['60s', 'To activate'],
                 ].map(([v, l]) => (
                   <div key={l} style={{ borderTop: '1px solid var(--border)', paddingTop: 14 }}>
-                    <div className="gf-price-num" style={{ fontSize: 28 }}>{v}</div>
-                    <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.16em', color: 'var(--text-tertiary)', marginTop: 4 }}>{l}</div>
+                    <div className="gf-price-num" style={{ fontSize: 'clamp(22px, 6vw, 28px)' }}>{v}</div>
+                    <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--text-tertiary)', marginTop: 4 }}>{l}</div>
                   </div>
                 ))}
               </div>
             </Reveal>
             <Reveal delay={320}>
-              <div style={{ display: 'flex', gap: 12 }}>
-                <button className="gf-cta" onClick={() => { const el = document.getElementById('waitlist'); if (el) { const top = el.getBoundingClientRect().top + window.scrollY - 24; window.scrollTo({ top, behavior: 'smooth' }); } }}>Join the waitlist →</button>
+              <div className="gf-cta-stack">
+                <button className="gf-cta" onClick={onWaitlist}>Join the waitlist →</button>
                 <button className="gf-cta-ghost">Calculate returns</button>
               </div>
             </Reveal>
@@ -46,51 +47,49 @@ Set up UPI Autopay once. Save ₹100 a week, ₹500 a month, or whatever fits yo
 }
 
 function AutoSaveCard() {
-  // Daily SIP projection ~ ₹100/day, 10 years
   const points = React.useMemo(
     () => Array.from({ length: 30 }, (_, i) => 50 + i * 8 + Math.pow(i, 1.55) * 1.4),
     []
   );
   return (
-    <div className="gf-card-elev" style={{ padding: 32, position: 'relative', overflow: 'hidden' }}>
+    <div className="gf-card-elev gf-autosave-card" style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="gf-guilloche" />
       <div style={{ position: 'relative' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 22 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 22 }}>
           <div>
             <div className="mono-tag" style={{ color: 'var(--text-tertiary)' }}>Daily SIP · UPI Autopay</div>
-            <div className="font-display" style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 400, letterSpacing: '-0.02em', marginTop: 6 }}>₹100 / day</div>
-            <div style={{ fontSize: 13, color: 'var(--success)', fontFamily: 'var(--font-mono)' }}>▲ 0.084 g credited today · 5:31 AM</div>
+            <div className="font-display" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 7vw, 36px)', fontWeight: 400, letterSpacing: '-0.02em', marginTop: 6 }}>₹100 / day</div>
+            <div style={{ fontSize: 12.5, color: 'var(--success)', fontFamily: 'var(--font-mono)' }}>▲ 0.084 g credited today · 5:31 AM</div>
           </div>
-          <div style={{ width: 56, height: 56, borderRadius: 12, background: 'linear-gradient(135deg, var(--cta-1), var(--cta-2), var(--cta-3))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--cta-ink)', fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600 }}>Au</div>
+          <div style={{ width: 48, height: 48, flexShrink: 0, borderRadius: 12, background: 'linear-gradient(135deg, var(--cta-1), var(--cta-2), var(--cta-3))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--cta-ink)', fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600 }}>Au</div>
         </div>
 
-        {/* Sparkline */}
-        <div style={{ position: 'relative', height: 130, marginBottom: 18 }}>
-          <Sparkline data={points} width={520} height={130} />
+        <div style={{ position: 'relative', height: 120, marginBottom: 18 }}>
+          <Sparkline data={points} height={120} fluid />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 16, paddingTop: 18, borderTop: '1px solid var(--border)' }}>
           <div>
-            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.16em', color: 'var(--text-tertiary)' }}>Projected · 10y</div>
-            <div className="gf-price-num" style={{ fontSize: 30, marginTop: 4, whiteSpace: 'nowrap' }}>₹6,84,290</div>
+            <div style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--text-tertiary)' }}>Projected · 10y</div>
+            <div className="gf-price-num" style={{ fontSize: 'clamp(22px, 6vw, 30px)', marginTop: 4, whiteSpace: 'nowrap' }}>₹6,84,290</div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.16em', color: 'var(--text-tertiary)' }}>Gain</div>
-            <div style={{ fontSize: 18, color: 'var(--success)', fontFamily: 'var(--font-mono)', marginTop: 4 }}>+₹3,19,290</div>
+            <div style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--text-tertiary)' }}>Gain</div>
+            <div style={{ fontSize: 'clamp(15px, 4vw, 18px)', color: 'var(--success)', fontFamily: 'var(--font-mono)', marginTop: 4, whiteSpace: 'nowrap' }}>+₹3,19,290</div>
           </div>
         </div>
 
-        <div style={{ marginTop: 18, display: 'grid', gap: 1, background: 'var(--border-subtle)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+        <div className="gf-autosave-log" style={{ marginTop: 18, display: 'grid', gap: 1, background: 'var(--border-subtle)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
           {[
             ['MON · 14 OCT', '₹100', '0.084 g', 'UPI · HDFC'],
             ['SUN · 13 OCT', '₹100', '0.085 g', 'UPI · HDFC'],
             ['SAT · 12 OCT', '₹100', '0.083 g', 'UPI · HDFC'],
           ].map(([d, amt, g, src]) => (
-            <div key={d} style={{ background: 'var(--surface-elevated)', display: 'grid', gridTemplateColumns: '1.2fr 0.7fr 0.8fr 1fr', gap: 10, padding: '10px 14px', fontSize: 12, alignItems: 'center' }}>
+            <div key={d} className="gf-autosave-log-row" style={{ background: 'var(--surface-elevated)', display: 'grid', gap: 10, padding: '10px 14px', fontSize: 12, alignItems: 'center' }}>
               <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-tertiary)', fontSize: 11 }}>{d}</span>
               <span style={{ fontWeight: 600 }}>{amt}</span>
               <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--gold-bright)' }}>{g}</span>
-              <span style={{ textAlign: 'right', fontSize: 11, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{src}</span>
+              <span className="gf-autosave-log-src" style={{ textAlign: 'right', fontSize: 11, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{src}</span>
             </div>
           ))}
         </div>

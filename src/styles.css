@@ -779,6 +779,17 @@ button:focus-visible, a:focus-visible {
 .gf-app-mockup-raise { margin-bottom: 0; }
 @media (min-width: 1024px) { .gf-app-mockup-raise { margin-bottom: 40px; } }
 
+.gf-autosave-card { padding: 20px; }
+@media (min-width: 640px) { .gf-autosave-card { padding: 32px; } }
+
+/* transaction log: drop the source column on mobile, 4 cols at >= 640px */
+.gf-autosave-log-row { grid-template-columns: 1.2fr 0.7fr 0.9fr; }
+.gf-autosave-log-row .gf-autosave-log-src { display: none; }
+@media (min-width: 640px) {
+  .gf-autosave-log-row { grid-template-columns: 1.2fr 0.7fr 0.8fr 1fr; }
+  .gf-autosave-log-row .gf-autosave-log-src { display: block; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
