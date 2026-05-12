@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 
 // Site chrome: top nav + footer + price marquee strip
 
@@ -49,6 +49,86 @@ function ThemeSwitcher() {
   );
 }
 
+const NAV_LINKS = [
+  { label: 'Product',  hash: 'product' },
+  { label: 'Security', hash: 'security' },
+  { label: 'Learn',    hash: 'learn' },
+];
+
+function MobileNav({ headerHeight, onLaunch }) {
+  const [open, setOpen] = React.useState(false);
+  const btnRef = React.useRef(null);
+  const panelRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const html = document.documentElement;
+    const prevOverflow = html.style.overflow;
+    html.style.overflow = 'hidden';
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    const first = panelRef.current && panelRef.current.querySelector('a, button');
+    if (first) first.focus();
+    return () => {
+      html.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+      if (btnRef.current) btnRef.current.focus();
+    };
+  }, [open]);
+
+  const go = (href) => { setOpen(false); window.location.assign(href); };
+
+  return (
+    <div className="gf-nav-toggle">
+      <button
+        ref={btnRef}
+        aria-label="Menu"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        style={{
+          width: 44, height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          borderRadius: 12, color: 'var(--text-primary)',
+        }}
+      >
+        {open ? <X size={22} strokeWidth={1.8} /> : <Menu size={22} strokeWidth={1.8} />}
+      </button>
+
+      {open && (
+        <>
+          <div className="gf-nav-panel-backdrop" style={{ top: headerHeight }} onClick={() => setOpen(false)} />
+          <nav ref={panelRef} className="gf-nav-panel" style={{ top: headerHeight, padding: '8px 20px 20px' }}>
+            {NAV_LINKS.map((x) => (
+              <a
+                key={x.label}
+                href={'/#' + x.hash}
+                onClick={(e) => { e.preventDefault(); go('/#' + x.hash); }}
+                style={{
+                  display: 'flex', alignItems: 'center', minHeight: 48,
+                  fontSize: 16, color: 'var(--text-secondary)',
+                  borderBottom: '1px solid var(--border-subtle)',
+                }}
+              >
+                {x.label}
+              </a>
+            ))}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginTop: 16 }}>
+              <button
+                className="gf-cta"
+                style={{ flex: 1 }}
+                onClick={() => { setOpen(false); (onLaunch || (() => window.location.assign('/#waitlist')))(); }}
+              >
+                Join waitlist
+                <ArrowRight size={14} strokeWidth={1.8} />
+              </button>
+              <ThemeSwitcher />
+            </div>
+          </nav>
+        </>
+      )}
+    </div>
+  );
+}
+
 export function TopNav({ onLaunch }) {
   const [scrolled, setScrolled] = React.useState(false);
   React.useEffect(() => {
@@ -57,6 +137,7 @@ export function TopNav({ onLaunch }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+  const headerHeight = 64;
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 50,
@@ -66,28 +147,24 @@ export function TopNav({ onLaunch }) {
       borderBottom: scrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
       transition: 'background 240ms var(--ease-out), border-color 240ms var(--ease-out), backdrop-filter 240ms var(--ease-out)',
     }}>
-      <div className="gf-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
+      <div className="gf-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: headerHeight }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <img src="/logo.svg" alt="goldfi" style={{ height: 28, width: 'auto', display: 'block' }} />
+          <img src="/logo.svg" alt="goldfi" style={{ height: 26, width: 'auto', display: 'block' }} />
         </a>
-        <nav style={{ display: 'flex', gap: 28, alignItems: 'center', fontSize: 14, color: 'var(--text-secondary)' }}>
-          {[
-            { label: 'Product',  hash: 'product' },
-            { label: 'Security', hash: 'security' },
-            { label: 'Learn',    hash: 'learn' },
-          ].map((x) => (
+        <nav className="gf-nav-desktop" style={{ gap: 28, alignItems: 'center', fontSize: 14, color: 'var(--text-secondary)' }}>
+          {NAV_LINKS.map((x) => (
             <a key={x.label} href={'/#' + x.hash} style={{ transition: 'color 150ms' }}
                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}>{x.label}</a>
           ))}
         </nav>
-        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-          {/* <a href="/#waitlist" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Sign in</a>*/}
+        <div className="gf-nav-desktop" style={{ gap: 12, alignItems: 'center' }}>
           <button className="gf-cta" onClick={onLaunch || (() => { window.location.assign('/#waitlist'); })} style={{ padding: '10px 18px', fontSize: 14 }}>
             Join waitlist
             <ArrowRight size={14} strokeWidth={1.8} />
           </button>
         </div>
+        <MobileNav headerHeight={headerHeight} onLaunch={onLaunch} />
       </div>
     </header>
   );
