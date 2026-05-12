@@ -1,7 +1,30 @@
 import React from 'react';
-import { Sparkline, Reveal } from '../../components/primitives';
+import { Sparkline, Reveal, useInView } from '../../components/primitives';
 
 // Remaining sections: Auto-Save, FAQ
+
+const PREFERS_REDUCED_MOTION =
+  typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Animate an integer 0 → target on an ease-out curve, once `active` becomes true.
+function useCountUp(target, duration = 1800, active = true) {
+  const [val, setVal] = React.useState(PREFERS_REDUCED_MOTION ? target : 0);
+  React.useEffect(() => {
+    if (!active) return;
+    if (PREFERS_REDUCED_MOTION) { setVal(target); return; }
+    let raf, startT = null;
+    const step = (t) => {
+      if (startT === null) startT = t;
+      const p = Math.min(1, (t - startT) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(Math.round(target * eased));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [active, target, duration]);
+  return val;
+}
 
 export function AutoSave() {
   const onWaitlist = () => { const el = document.getElementById('waitlist'); if (el) { const top = el.getBoundingClientRect().top + window.scrollY - 24; window.scrollTo({ top, behavior: 'smooth' }); } };
@@ -51,8 +74,11 @@ function AutoSaveCard() {
     () => Array.from({ length: 30 }, (_, i) => 50 + i * 8 + Math.pow(i, 1.55) * 1.4),
     []
   );
+  const [cardRef, seen] = useInView({ threshold: 0.25 });
+  const projected = useCountUp(684290, 1800, seen);
+  const gain = useCountUp(319290, 1800, seen);
   return (
-    <div className="gf-card-elev gf-autosave-card" style={{ position: 'relative', overflow: 'hidden' }}>
+    <div ref={cardRef} className="gf-card-elev gf-autosave-card" style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="gf-guilloche" />
       <div style={{ position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 22 }}>
@@ -65,17 +91,17 @@ function AutoSaveCard() {
         </div>
 
         <div style={{ position: 'relative', height: 120, marginBottom: 18 }}>
-          <Sparkline data={points} height={120} fluid />
+          <Sparkline data={points} height={120} fluid drawn={seen} />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 16, paddingTop: 18, borderTop: '1px solid var(--border)' }}>
           <div>
             <div style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--text-tertiary)' }}>Projected · 10y</div>
-            <div className="gf-price-num" style={{ fontSize: 'clamp(22px, 6vw, 30px)', marginTop: 4, whiteSpace: 'nowrap' }}>₹6,84,290</div>
+            <div className="gf-price-num" style={{ fontSize: 'clamp(22px, 6vw, 30px)', marginTop: 4, whiteSpace: 'nowrap' }}>₹{projected.toLocaleString('en-IN')}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--text-tertiary)' }}>Gain</div>
-            <div style={{ fontSize: 'clamp(15px, 4vw, 18px)', color: 'var(--success)', fontFamily: 'var(--font-mono)', marginTop: 4, whiteSpace: 'nowrap' }}>+₹3,19,290</div>
+            <div style={{ fontSize: 'clamp(15px, 4vw, 18px)', color: 'var(--success)', fontFamily: 'var(--font-mono)', marginTop: 4, whiteSpace: 'nowrap' }}>+₹{gain.toLocaleString('en-IN')}</div>
           </div>
         </div>
 

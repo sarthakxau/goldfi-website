@@ -23,7 +23,9 @@ export function useLivePrice(base = 2384.50) {
 }
 
 // Mini sparkline path. Pass fluid to make the SVG fill its parent's width.
-export function Sparkline({ data, width = 200, height = 50, fluid = false, stroke = 'var(--gold-bright)', fill = 'rgba(245,184,50,0.12)' }) {
+// Pass drawn={false} to render it "undrawn" — the line then animates in (left→right)
+// and the area fades in when drawn flips to true.
+export function Sparkline({ data, width = 200, height = 50, fluid = false, drawn = true, stroke = 'var(--gold-bright)', fill = 'rgba(245,184,50,0.12)' }) {
   if (!data || data.length === 0) return null;
   const min = Math.min(...data), max = Math.max(...data);
   const range = max - min || 1;
@@ -39,8 +41,17 @@ export function Sparkline({ data, width = 200, height = 50, fluid = false, strok
       preserveAspectRatio="none"
       style={{ display: 'block', maxWidth: '100%' }}
     >
-      <path d={area} fill={fill} />
-      <path d={path} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
+      <path d={area} fill={fill} style={{ opacity: drawn ? 1 : 0, transition: 'opacity 1.6s var(--ease-out)' }} />
+      <path
+        d={path}
+        pathLength="1"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        style={{ strokeDasharray: 1, strokeDashoffset: drawn ? 0 : 1, transition: 'stroke-dashoffset 1.6s var(--ease-out)' }}
+      />
     </svg>
   );
 }
@@ -56,8 +67,8 @@ export function genPriceData(n = 80, base = 2380, vol = 18) {
   return out;
 }
 
-// Hook: in-view trigger
-function useInView(opts = { threshold: 0.18 }) {
+// Hook: in-view trigger (fires once, then disconnects)
+export function useInView(opts = { threshold: 0.18 }) {
   const ref = React.useRef(null);
   const [inView, setInView] = React.useState(false);
   React.useEffect(() => {
